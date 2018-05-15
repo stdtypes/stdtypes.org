@@ -104,9 +104,9 @@ p
 
 
 .container
-  display: inline-block
+  display: block
   margin: 30px 20px
-  width: 750px
+  max-width: 750px
   min-height: calc(100% - 86px)
   transition: transform .3s, opacity .3s
   opacity: 1
@@ -214,3 +214,64 @@ h3.active
     font-size: 14px
     font-style: italic
     margin-left: 38px
+
+img
+  max-width: calc(100% - 20px)
+
+////////////////////////////////////////////////////////////////////////////////
+
+@media only screen and (max-device-width : 750px)
+
+  body
+    padding: 46px 0 0 0
+
+  nav
+    background: none
+    width: 100%
+    height: 0
+    overflow: hidden
+    z-index: 1
+    padding-top: 56px
+
+    h1
+      padding: 16px 32px
+      margin: 0
+      line-height: 24px
+      font-size: 20px
+      background: #f1f1f1
+      position: fixed
+      top: 0
+      left: 0
+      width: 100%
+      border-bottom: 2px solid darken(#f1f1f1, 5%)
+
+    &.open
+      background: #f1f1f1
+      overflow-y: auto
+      height: 100%
+
+    input
+      width: calc(100% - 50px)
+      margin: 14px 20px 30px
+      font-size: 20px
+      padding: 4px 12px
+      display: block
+
+  .burger
+    background-image: url(../img/burger.svg)
+    background-size: 24px 24px
+    background-position: 16px 16px
+    background-repeat: no-repeat
+    width: 56px
+    height: 56px
+    position: fixed
+    top: 0
+    right: 0
+
+  h4
+    padding: 8px 30px
+    background: darken(#f1f1f1, 5%)
+    margin: 0
+
+  .container
+    margin: 10px 0px

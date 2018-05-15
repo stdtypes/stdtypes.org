@@ -164,6 +164,9 @@ currentType = ""
 loadSymbol = (symbol) =>
   if symbol
 
+    $ "nav"
+      .removeClass "open"
+
     type = symbol.split(".")[0]
     if currentType == type
       $ "h3.active"
@@ -206,3 +209,8 @@ fetch "./all.json"
 
 loadSymbol document.location.hash[1..]
 $(window).on "hashchange", () => loadSymbol document.location.hash[1..]
+
+$ ".burger"
+  .on "click", (event) ->
+    $ "nav"
+      .toggleClass "open"

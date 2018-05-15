@@ -166,6 +166,7 @@ currentType = "";
 loadSymbol = (symbol) => {
   var type;
   if (symbol) {
+    $("nav").removeClass("open");
     type = symbol.split(".")[0];
     if (currentType === type) {
       $("h3.active").removeClass("active");
@@ -197,4 +198,8 @@ loadSymbol(document.location.hash.slice(1));
 
 $(window).on("hashchange", () => {
   return loadSymbol(document.location.hash.slice(1));
+});
+
+$(".burger").on("click", function(event) {
+  return $("nav").toggleClass("open");
 });
