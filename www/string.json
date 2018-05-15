@@ -1,0 +1,23 @@
+{
+  "name": "string",
+  "desc": "String.",
+  "tags": [
+    "Primitive",
+    "Buildin"
+  ],
+  "doc": "A string is traditionally a sequence of characters, either as a literal constant or as some kind of variable. See [Wiki/String](https://en.wikipedia.org/wiki/String_(computer_science)).",
+  "time": "2018-04-25T09:37:28.000Z",
+  "version": "1.0.0",
+  "stability": "stable",
+  "meta": {
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ],
+    "input": [
+      "CoffeeScript",
+      "JavaScript"
+    ]
+  }
+}

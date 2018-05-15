@@ -1,0 +1,107 @@
+{
+  "electric_current": {
+    "desc": "Electric current value.",
+    "tags": [
+      "Physical",
+      "SI"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "symbols": [
+      "Value",
+      "ToString"
+    ],
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ]
+  },
+  "float": {
+    "desc": "Floating-point number.",
+    "tags": [
+      "Primitive",
+      "Buildin"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ]
+  },
+  "geolocation": {
+    "desc": "Geographical location.",
+    "tags": [
+      "Physical",
+      "Location"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "symbols": [
+      "Latitude",
+      "Longitude",
+      "DistanceTo"
+    ],
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ]
+  },
+  "int": {
+    "desc": "Integer number.",
+    "tags": [
+      "Primitive",
+      "Buildin"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ]
+  },
+  "string": {
+    "desc": "String.",
+    "tags": [
+      "Primitive",
+      "Buildin"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ]
+  },
+  "temperature": {
+    "desc": "Temperature with value and unit.",
+    "tags": [
+      "Physical",
+      "SI"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "symbols": [
+      "Quantity",
+      "Unit",
+      "ToUnit",
+      "ToString"
+    ],
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ]
+  }
+}

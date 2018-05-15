@@ -1,0 +1,289 @@
+body, html
+  height: 100%
+
+body
+  width: 100%
+  box-sizing: border-box
+  margin: 0
+  background: #fff
+  padding-left: 300px
+  color: #555
+  font-family: "Inconsolata", monospace
+  font-size: 15px
+  line-height: 18px
+  overflow-x: hidden
+  overflow-y: auto
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+.table
+
+.row
+  display: flex
+  flex-direction: row
+
+  &:hover
+    background: darken(#fff, 3%)
+
+.cell
+  &:last-child
+    width: 500px
+
+  &:first-child
+    width: 800px
+    margin-right: 100px
+
+  &:empty
+    background: blue
+
+  &.fill
+    width: 1400px
+    margin-right: 0
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+label
+  vertical-align: top
+  margin: 6px
+
+button
+  background: #666
+  font: inherit
+  font-size: 16px
+  height: 36px
+  padding: 4px 12px
+  border: none
+  color: #f1f1f1
+  cursor: pointer
+  border: none
+
+  &:hover
+    background: lighten(#666, 5%)
+
+.input
+  min-height: 100%
+  padding: 3px 6px
+
+  input, textarea
+    background: #666
+    border: none
+    color: #fff
+    padding: 3px 8px
+    outline: none
+
+.operator
+  .impl
+    background: #666
+
+.params, .returns
+  .impl
+    background: darken(#f1f1f1, 20%)
+  .row:hover .impl
+    background: darken(#f1f1f1, 25%)
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+nav
+  background: #f1f1f1
+  width: 300px
+  position: fixed
+  left: 0
+  top: 0
+  bottom: 0
+
+h1
+  font-size: 25px
+  font-weight: normal
+  margin: 30px 30px 8px
+
+h2
+  font-size: 18px
+  font-weight: normal
+  margin: 30px 30px 8px
+
+h3
+  font-size: 18px
+  font-weight: normal
+  margin: 20px 30px 8px
+  display: inline-block
+  color: #fff
+  padding: 2px 24px 2px 8px
+  background: lighten(#333, 20%)
+
+  a
+    color: #fff
+
+h4
+  font-size: 16px
+  letter-spacing: 2px
+  font-weight: normal
+  margin: 30px 30px 8px
+
+h5
+  font-size: 14px
+  letter-spacing: 2px
+  font-weight: normal
+  margin: 10px 30px 8px
+
+nav input
+  border: none
+  outline: none
+  width: 250px
+  border-bottom: 1px solid darken(#f1f1f1, 10%)
+  padding: 2px 12px
+  box-sizing: border-box
+  background: #fff
+  margin: 8px 20px 30px
+  font: inherit
+
+  &:focus
+    background: #f1f1f1
+
+a
+  color: darken(#555, 20%)
+  text-decoration: none
+
+  &:hover
+    text-decoration: underline
+
+  &.active
+    color: #2194CE
+
+ul
+  font-size: 18px
+  padding: 0
+  margin: 10px 0
+  list-style-type: none
+
+li
+  padding: 0
+  a
+    padding: 3px 25px
+    display: block
+    color: #2194CE
+    cursor: pointer
+
+p
+  margin: 10px
+  font-size: 15px
+
+
+.container
+  display: inline-block
+  margin: 30px 20px
+  min-height: calc(100% - 86px)
+  transition: transform .3s, opacity .3s
+  opacity: 1
+
+.unset
+  transform: translateX(-6px)
+  opacity: 0
+
+.details
+  margin: 10px
+  float: right
+  text-align: right
+
+.implementation
+  a
+    display: inline-block
+    margin: 2px 4px
+    opacity: .4
+    position: relative
+    &:hover
+      opacity: 1
+      &:before, &:after
+        display: block
+    &:before
+      display: none
+      content: 'This type is implemented in ' attr(data-lang) '!'
+      color: #fff
+      text-align: center
+      width: 200px
+      background: #2194CE
+      padding: 4px 6px 6px
+      position: absolute
+      bottom: 36px
+      left: 50%
+      transform: translateX(-50%)
+    &:after
+      display: none
+      content: ''
+      width: 0px
+      height: 0px
+      border-left: 10px solid transparent
+      border-right: 10px solid transparent
+      border-top: 10px solid #2194CE
+      position: absolute
+      bottom: 26px
+      left: 50%
+      transform: translateX(-50%)
+
+
+  img
+    height: 16px
+
+.stability
+  padding: 1px 6px
+  margin-left: 6px
+
+.stable
+  background: #92ce21
+  color: #fff
+
+.reference
+  font-size: 15px
+
+footer
+  padding: 4px 30px
+
+.params, .returns
+  h3
+    background: none
+    margin: 0px 10px 0px 30px
+    a
+      color: #555
+      font-size: 15px
+
+
+h3.active
+  background: #2194CE
+  color: #fff
+  a
+    color: #fff
+
+.params
+  margin-bottom: 0
+
+  &:after
+    content: ''
+    width: 200px
+    display: block
+    position: absolute
+    border-bottom: 1px dashed #737373
+    margin-left: 30px
+
+  &:empty:before
+    content: 'No Parameters'
+    font-size: 14px
+    font-style: italic
+    margin-left: 38px
+
+  &:empty
+    border-right: 500px solid #bebebe
+
+.returns
+  margin-top: 0
+
+  &:empty:before
+    content: 'No Return Values'
+    font-size: 14px
+    font-style: italic
+    margin-left: 38px
+
+  &:empty
+    border-right: 500px solid #bebebe

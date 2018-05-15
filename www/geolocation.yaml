@@ -1,0 +1,44 @@
+name: geolocation
+desc: Geographical location.
+tags: [ Physical, Location ]
+doc:
+  A _position_ on earth, defined by latitude and longitude.
+  See [Wiki/Geographic Coordinate System](https://en.wikipedia.org/wiki/Geographic_coordinate_system).
+
+
+  ![Lat Long](https://upload.wikimedia.org/wikipedia/commons/0/01/Latitude_and_Longitude_of_the_Earth-es.svg)
+
+
+  [Djexplo / Wikimedia Commons]
+time: 2018-04-25T09:37:28.000Z
+version: 1.0.0
+stability: stable
+symbols:
+  - name: Latitude
+    doc: Position Latitude.
+    type: float
+  - name: Longitude
+    doc: Position Longitude.
+    type: float
+  - name: DistanceTo
+    doc: Distance between two points along the earth surface in *km*.
+    params:
+      - name: other
+        type: geolocation
+    returns:
+      - name: dist
+        type: float
+examples:
+  - name: Saint Petersburg
+    desc: "[Saint Petersburg](https://de.wikipedia.org/wiki/Saint_Petersburg)"
+    value:
+      Latitude: 59.93863
+      Longitude: 30.31413
+  - name: New York City
+    desc: "[New York City](https://de.wikipedia.org/wiki/New_York_City)"
+    value:
+      Latitude: 40.730610
+      Longitude: -73.935242
+meta:
+  impl: [CoffeeScript, JavaScript, Go]
+  input: [CoffeeScript, JavaScript]

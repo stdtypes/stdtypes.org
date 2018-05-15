@@ -1,0 +1,48 @@
+electric_current:
+  desc: Electric current value.
+  version: 1.0.0
+  stability: stable
+  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  tags: [Physical, SI]
+  symbols: [Value, ToString]
+  impl: [CoffeeScript, JavaScript, Go]
+float:
+  desc: Floating-point number.
+  version: 1.0.0
+  stability: stable
+  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  tags: [Primitive, Buildin]
+  symbols: []
+  impl: [CoffeeScript, JavaScript, Go]
+geolocation:
+  desc: Geographical location.
+  version: 1.0.0
+  stability: stable
+  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  tags: [Physical, Location]
+  symbols: [Latitude, Longitude, DistanceTo]
+  impl: [CoffeeScript, JavaScript, Go]
+int:
+  desc: Integer number.
+  version: 1.0.0
+  stability: stable
+  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  tags: [Primitive, Buildin]
+  symbols: []
+  impl: [CoffeeScript, JavaScript, Go]
+string:
+  desc: String.
+  version: 1.0.0
+  stability: stable
+  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  tags: [Primitive, Buildin]
+  symbols: []
+  impl: [CoffeeScript, JavaScript, Go]
+temperature:
+  desc: Temperature with value and unit.
+  version: 1.0.0
+  stability: stable
+  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  tags: [Physical, SI]
+  symbols: [Quantity, Unit, ToUnit, ToString]
+  impl: [CoffeeScript, JavaScript, Go]

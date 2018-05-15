@@ -1,0 +1,20 @@
+{
+  "name": "standart-types",
+  "main": "",
+  "version": "1.0.0",
+  "description": "Type definitions for common data structures.",
+  "keywords": [],
+  "repository": "https://github.com/stdtypes.org/standat-types",
+  "license": "MIT",
+  "scripts": {
+    "live": "node scripts/live",
+    "yaml2json": "node scripts/yaml2json"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "js-yaml": "^3.11.0"
+  }
+}
