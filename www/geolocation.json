@@ -5,7 +5,7 @@
     "Physical",
     "Location"
   ],
-  "doc": "A _position_ on earth, defined by latitude and longitude. See [Wiki/Geographic Coordinate System](https://en.wikipedia.org/wiki/Geographic_coordinate_system).\n\n![Lat Long](https://upload.wikimedia.org/wikipedia/commons/0/01/Latitude_and_Longitude_of_the_Earth-es.svg)\n\n[Djexplo / Wikimedia Commons]",
+  "doc": "A _position_ on earth, defined by latitude and longitude. See [Wiki/Geographic Coordinate System](https://en.wikipedia.org/wiki/Geographic_coordinate_system).\n\n![Lat Long](https://upload.wikimedia.org/wikipedia/commons/6/62/Latitude_and_Longitude_of_the_Earth.svg)\n\n[Djexplo / Wikimedia Commons]",
   "time": "2018-04-25T09:37:28.000Z",
   "version": "1.0.0",
   "stability": "stable",
