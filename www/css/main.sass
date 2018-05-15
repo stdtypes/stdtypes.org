@@ -18,75 +18,6 @@ body
 ////////////////////////////////////////////////////////////////////////////////
 
 
-.table
-
-.row
-  display: flex
-  flex-direction: row
-
-  &:hover
-    background: darken(#fff, 3%)
-
-.cell
-  &:last-child
-    width: 500px
-
-  &:first-child
-    width: 800px
-    margin-right: 100px
-
-  &:empty
-    background: blue
-
-  &.fill
-    width: 1400px
-    margin-right: 0
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-label
-  vertical-align: top
-  margin: 6px
-
-button
-  background: #666
-  font: inherit
-  font-size: 16px
-  height: 36px
-  padding: 4px 12px
-  border: none
-  color: #f1f1f1
-  cursor: pointer
-  border: none
-
-  &:hover
-    background: lighten(#666, 5%)
-
-.input
-  min-height: 100%
-  padding: 3px 6px
-
-  input, textarea
-    background: #666
-    border: none
-    color: #fff
-    padding: 3px 8px
-    outline: none
-
-.operator
-  .impl
-    background: #666
-
-.params, .returns
-  .impl
-    background: darken(#f1f1f1, 20%)
-  .row:hover .impl
-    background: darken(#f1f1f1, 25%)
-
-////////////////////////////////////////////////////////////////////////////////
-
-
 nav
   background: #f1f1f1
   width: 300px
@@ -175,6 +106,7 @@ p
 .container
   display: inline-block
   margin: 30px 20px
+  width: 750px
   min-height: calc(100% - 86px)
   transition: transform .3s, opacity .3s
   opacity: 1
@@ -184,6 +116,7 @@ p
   opacity: 0
 
 .details
+  font-size: 15px
   margin: 10px
   float: right
   text-align: right
@@ -273,9 +206,6 @@ h3.active
     font-style: italic
     margin-left: 38px
 
-  &:empty
-    border-right: 500px solid #bebebe
-
 .returns
   margin-top: 0
 
@@ -284,6 +214,3 @@ h3.active
     font-size: 14px
     font-style: italic
     margin-left: 38px
-
-  &:empty
-    border-right: 500px solid #bebebe

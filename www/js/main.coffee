@@ -40,31 +40,13 @@ isPureFunction = (sym) -> ! isObject(sym) and isFunction(sym)
 ################################################################################
 
 
-createTable = () -> $("<div class='table'>")
-createRow = (colA, colB) ->
-  cellA = $ "<div class='cell sym'>"
-  cellA.append colA if colA
-  row = $ "<div class='row'>"
-  row.append cellA
-  if colB
-    cellB = $ "<div class='cell impl'>"
-    cellB.append colB
-    row.append cellB
-  else
-    cellA.addClass "fill"
-  return row
-
-
-################################################################################
-
-
 languages =
   JavaScript: ".js"
   Go: ".go"
   CoffeeScript: ".coffeescript"
 
 
-inflateSymbol = (sym, impl, table, parent="") ->
+inflateSymbol = (sym, impl, container, parent="") ->
 
   href = if parent then parent+"."+sym.name else sym.name
 
@@ -78,7 +60,7 @@ inflateSymbol = (sym, impl, table, parent="") ->
 
   details = $ "<div>"
     .addClass "details"
-    # .appendTo ul
+
   if sym.meta?.impl
 
     impls = $ "<div>"
@@ -117,31 +99,24 @@ inflateSymbol = (sym, impl, table, parent="") ->
   if name == "operator::()"
     heading = $ "<h5>"
       .text "Function Call"
-    #  .appendTo ul
+
   else if name == "operator::new"
     heading = $ "<h5>"
       .text "Constructor"
-    #  .appendTo ul
+
   else if name
     heading = $ "<h3>"
       .append $("<a>").attr("href", "#"+href).text name+suffix
       .attr "id", href
-    #  .appendTo ul
 
-  input = $ "<div>"
-    .addClass "input"
-
-  row = createRow heading, input
-  inflateImpl sym, impl, input, parent
-  table.append row
+  container.append heading
 
   if name == "operator::()"
     heading.closest ".row"
       .addClass "operator"
 
-  cell = heading.parent()
   if ! details.is ":empty"
-    details.appendTo cell
+    details.appendTo container
 
   if sym.type
     type = if sym.type[0] == "." then parent.split(".")[0]+sym.type else sym.type
@@ -149,53 +124,37 @@ inflateSymbol = (sym, impl, table, parent="") ->
       .addClass "reference"
       .attr "href", "#"+type
       .text "→ "+type
-      .appendTo cell
+      .appendTo container
 
   if sym.doc
     doc = $ "<p>"
       .addClass "doc"
       .html markdown.makeHtml sym.doc
-      .appendTo cell
+      .appendTo container
 
   if sym.name and sym.name.startsWith "operator::"
 
     if typeof sym.params == "string"
       sym.params = [name: "", type: sym.params]
-    params = createTable() #  $ "<ul>"
+    params = $ "<ul>"
       .addClass "params"
-    #  .appendTo cell
-    #  .appendTo ul
-    table.append createRow params, null
+      .appendTo container
     inflateSymbol symbol, null, params, href+".params" for symbol in sym.params
 
     if typeof sym.returns == "string"
       sym.returns = [name: "", type: sym.returns]
-    returns = createTable() # $ "<ul>"
+    returns = $ "<ul>"
       .addClass "returns"
-    #  .appendTo cell
-    #  .appendTo ul
-    table.append createRow returns, null
-
+      .appendTo container
     inflateSymbol symbol, null, returns, href+".returns" for symbol in sym.returns
 
   else if sym.symbols
 
-    # syms = createTable() # $ "<ul>"
-    #  .addClass "symbols"
-    #  .appendTo ul
-    #table.append createRow syms, null
-    inflateSymbol symbol, null, table, href for symbol in sym.symbols
+    syms = $ "<ul>"
+      .addClass "symbols"
+      .appendTo container
 
-
-################################################################################
-
-
-fetchImpl = (type) ->
-  script = $ "<script>"
-    .prop "defer", true
-    .appendTo "head"
-
-  setTimeout () => script.attr "src", "./#{type}.js"
+    inflateSymbol symbol, null, syms, href for symbol in sym.symbols
 
 
 ################################################################################
@@ -223,124 +182,20 @@ loadSymbol = (symbol) =>
 
         ##########
 
-        table = createTable()
-        h4 = $ "<h4>"
-          .attr "id", name
-          .html "<a href='stdtypes.org'>std::</a>"+
-            "<a href='##{ type }' class='active'>#{ type }</a>"
-
-        input = $ "<h4>"
-          .text "Input"
-
-        table.append createRow h4, input
-
-        table
+        container = $ "<ul>"
           .addClass "container"
           .insertAfter "nav"
+        h4 = $ "<h4>"
+          .html "<a href='stdtypes.org'>std::</a>"+
+            "<a href='##{ type }' class='active'>#{ type }</a>"
+          .appendTo container
 
         $ "h3.active"
           .removeClass "active"
 
-        ##########
-
-        hasImpl = sym.meta?.impl?.includes "JavaScript"
-
-        if ! hasImpl
-
-          inflateSymbol sym, null, table
-          $ document.getElementById symbol
-            .addClass "active"
-
-        else # if ! hasImpl
-
-          fetchImpl type
-          types.whenDefined type
-            .then (Impl) ->
-              impl = new Impl
-              inflateSymbol sym, impl, table
-
-              $ document.getElementById symbol
-                .addClass "active"
-        ###
-        else
-          fetchImpl pkg
-          fetchInput pkg
-          Promise.all [
-              types.whenDefined pkg
-              types.whenInputDefined pkg
-            ]
-            .then (args) =>
-              [Impl, Input] = args
-              impl = new Impl
-              input = new Input
-
-              inflateSymbol sym, impl, table
-
-              $ document.getElementById type
-                .addClass "active"
-        ###
-        ###
-        if sym.meta?.impl?.includes "JavaScript"
-
-          Impl = types.get pkg
-          if Impl then inflateImpl Impl
-          else
-
-            script = $ "<script>"
-              .prop "defer", true
-              .appendTo "head"
-
-            setTimeout () =>
-              script.attr "src", "./#{pkg}.js"
-              types.whenDefined pkg
-                .then inflateImpl
-          ###
-          ###
-          $.ajax
-            url: "./#{pkg}.js"
-            cache: true
-            dataType: "script"
-          ###
-
-################################################################################
-
-
-inflateImpl = (sym, impl, cell, parent="") ->
-
-  # href = if parent then parent+"."+sym.name else sym.name
-
-  type = switch
-    when sym.type then sym.type
-    when !parent then sym.name
-    else null
-
-  console.log impl, sym.name
-
-  if sym.name == "operator::()"
-    $ "<button>"
-      .addClass "call"
-      .text "Call Function"
-      .appendTo cell
-
-  else if type
-
-    fetchImpl type
-    types.whenDefined type
-      .then (Impl) ->
-
-        if Impl.Input
-          input = new Impl.Input
-          $ "<label>"
-            .text sym.name+":"
-            .appendTo cell
-          cell.append input.getElement()
-
-
-
-
-
-
-
+        inflateSymbol sym, null, container
+        $ document.getElementById symbol
+          .addClass "active"
 
 ################################################################################
 
