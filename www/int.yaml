@@ -1,5 +1,5 @@
 name: int
-desc: Integer number.
+desc: Integer number
 tags: [ Primitive, Buildin ]
 doc:
   An integer is a datum of integral data type, a data type that represents some

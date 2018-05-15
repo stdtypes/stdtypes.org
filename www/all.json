@@ -1,6 +1,6 @@
 {
   "electric_current": {
-    "desc": "Electric current value.",
+    "desc": "Electric current value",
     "tags": [
       "Physical",
       "SI"
@@ -19,7 +19,7 @@
     ]
   },
   "float": {
-    "desc": "Floating-point number.",
+    "desc": "Floating-point number",
     "tags": [
       "Primitive",
       "Buildin"
@@ -34,7 +34,7 @@
     ]
   },
   "geolocation": {
-    "desc": "Geographical location.",
+    "desc": "Geographical location",
     "tags": [
       "Physical",
       "Location"
@@ -54,7 +54,7 @@
     ]
   },
   "int": {
-    "desc": "Integer number.",
+    "desc": "Integer number",
     "tags": [
       "Primitive",
       "Buildin"
@@ -69,7 +69,7 @@
     ]
   },
   "string": {
-    "desc": "String.",
+    "desc": "String",
     "tags": [
       "Primitive",
       "Buildin"
@@ -84,7 +84,7 @@
     ]
   },
   "temperature": {
-    "desc": "Temperature with value and unit.",
+    "desc": "Temperature with value and unit",
     "tags": [
       "Physical",
       "SI"

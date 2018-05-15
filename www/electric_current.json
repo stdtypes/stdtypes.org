@@ -1,6 +1,6 @@
 {
   "name": "electric_current",
-  "desc": "Electric current value.",
+  "desc": "Electric current value",
   "tags": [
     "Physical",
     "SI"

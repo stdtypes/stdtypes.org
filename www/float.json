@@ -1,6 +1,6 @@
 {
   "name": "float",
-  "desc": "Floating-point number.",
+  "desc": "Floating-point number",
   "tags": [
     "Primitive",
     "Buildin"

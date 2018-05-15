@@ -1,6 +1,6 @@
 {
   "name": "temperature",
-  "desc": "Temperature with value and unit.",
+  "desc": "Temperature with value and unit",
   "tags": [
     "Physical",
     "SI"

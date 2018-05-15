@@ -1,5 +1,5 @@
 name: string
-desc: String.
+desc: String
 tags: [ Primitive, Buildin ]
 doc:
   A string is traditionally a sequence of characters, either as a literal
