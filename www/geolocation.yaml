@@ -1,6 +1,6 @@
 name: geolocation
 desc: Geographical location
-tags: [ Physical, Location ]
+tags: [ Scientific, Location ]
 doc:
   A _position_ on earth, defined by latitude and longitude.
   See [Wiki/Geographic Coordinate System](https://en.wikipedia.org/wiki/Geographic_coordinate_system).

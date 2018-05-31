@@ -1,6 +1,6 @@
 name: temperature
 desc: Temperature with value and unit
-tags: [ Physical, SI ]
+tags: [ Scientific, SI ]
 doc: Temperature is a physical quantity expressing hot and cold. See [Wiki/Temperature](https://en.wikipedia.org/wiki/Temperature).
 time: 2018-04-25T09:37:28.000Z
 version: 1.0.0

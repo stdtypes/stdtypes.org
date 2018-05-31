@@ -2,7 +2,7 @@
   "electric_current": {
     "desc": "Electric current value",
     "tags": [
-      "Physical",
+      "Scientific",
       "SI"
     ],
     "time": "2018-04-25T09:37:28.000Z",
@@ -36,7 +36,7 @@
   "geolocation": {
     "desc": "Geographical location",
     "tags": [
-      "Physical",
+      "Scientific",
       "Location"
     ],
     "time": "2018-04-25T09:37:28.000Z",
@@ -86,7 +86,7 @@
   "temperature": {
     "desc": "Temperature with value and unit",
     "tags": [
-      "Physical",
+      "Scientific",
       "SI"
     ],
     "time": "2018-04-25T09:37:28.000Z",

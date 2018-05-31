@@ -2,7 +2,7 @@
   "name": "temperature",
   "desc": "Temperature with value and unit",
   "tags": [
-    "Physical",
+    "Scientific",
     "SI"
   ],
   "doc": "Temperature is a physical quantity expressing hot and cold. See [Wiki/Temperature](https://en.wikipedia.org/wiki/Temperature).",

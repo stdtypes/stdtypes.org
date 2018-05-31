@@ -3,7 +3,7 @@ electric_current:
   version: 1.0.0
   stability: stable
   time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
-  tags: [Physical, SI]
+  tags: [Scientific, SI]
   symbols: [Value, ToString]
   impl: [CoffeeScript, JavaScript, Go]
 float:
@@ -19,7 +19,7 @@ geolocation:
   version: 1.0.0
   stability: stable
   time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
-  tags: [Physical, Location]
+  tags: [Scientific, Location]
   symbols: [Latitude, Longitude, DistanceTo]
   impl: [CoffeeScript, JavaScript, Go]
 int:
@@ -43,6 +43,6 @@ temperature:
   version: 1.0.0
   stability: stable
   time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
-  tags: [Physical, SI]
+  tags: [Scientific, SI]
   symbols: [Quantity, Unit, ToUnit, ToString]
   impl: [CoffeeScript, JavaScript, Go]
