@@ -20,7 +20,8 @@ contentTypes = {
   ".woff": "font/woff",
   ".woff2": "font/woff2",
   ".svg": "image/svg+xml",
-  ".png": "image/png"
+  ".png": "image/png",
+  ".ico": "image/x-icon"
 };
 
 server = http.createServer(function(req, res) {
