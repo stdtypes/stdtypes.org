@@ -1,4 +1,4 @@
-var currentType, inflateNavbar, inflateSymbol, isFunction, isObject, isPureFunction, languages, loadSymbol, markdown;
+var currentType, env, inflateNavbar, inflateSymbol, isAny, isFunction, isObject, isPureFunction, languages, loadEnv, loadSymbol, markdown;
 
 inflateNavbar = function(types) {
   var g, group, groups, li, name, results, type;
@@ -8,8 +8,8 @@ inflateNavbar = function(types) {
     type = types[name];
     g = type.tags[0];
     if (!(g in groups)) {
-      $("<h2>").text(g).appendTo("nav");
-      groups[g] = $("<ul>").appendTo("nav");
+      $("<h2>").text(g).appendTo(".index");
+      groups[g] = $("<ul>").appendTo(".index");
     }
     group = groups[g];
     li = $("<li>").appendTo(group);
@@ -38,6 +38,11 @@ isFunction = function(sym) {
   });
 };
 
+isAny = function(sym) {
+  var ref, ref1;
+  return ((ref = sym.meta) != null ? ref.abstract : void 0) && !((ref1 = sym.symbols) != null ? ref1.length : void 0) && !sym.type;
+};
+
 isPureFunction = function(sym) {
   return !isObject(sym) && isFunction(sym);
 };
@@ -49,9 +54,12 @@ languages = {
   CoffeeScript: ".coffeescript"
 };
 
-inflateSymbol = function(sym, impl, container, parent = "") {
-  var details, doc, heading, href, i, impls, j, k, l, len, len1, len2, len3, m, name, params, ref, ref1, ref2, ref3, ref4, results, results1, returns, stability, suffix, symbol, syms, type, version;
-  href = parent ? parent + "." + sym.name : sym.name;
+env = null;
+
+inflateSymbol = function(sym, impl, container, href) {
+  var details, doc, head, heading, i, impls, j, k, l, len, len1, len2, len3, m, name, params, ref, ref1, ref2, ref3, ref4, returns, stability, suffix, symbol, syms, type, version;
+  container = $("<div>").addClass("symbol").appendTo(container);
+  head = $("<div>").addClass("head level" + (href.split(".").length - 1)).appendTo(container);
   if ((sym.params || sym.returns) && !sym.name.startsWith("operator::")) {
     if (!sym.symbols) {
       sym.symbols = [];
@@ -96,28 +104,37 @@ inflateSymbol = function(sym, impl, container, parent = "") {
     }
   })();
   heading = null;
-  if (name === "operator::()") {
-    heading = $("<h5>").text("Function Call");
-  } else if (name === "operator::new") {
-    heading = $("<h5>").text("Constructor");
-  } else if (name) {
-    heading = $("<h3>").append($("<a>").attr("href", "#" + href).text(name + suffix)).attr("id", href);
-  }
-  container.append(heading);
-  if (name === "operator::()") {
-    heading.closest(".row").addClass("operator");
+  /*
+  if name == "operator::()"
+    $ "<h5>"
+      .text "Function Call"
+      .appendTo head
+
+  else if name == "operator::new"
+    $ "<h5>"
+      .text "Constructor"
+      .appendTo head
+
+  else
+  */
+  if (name && !name.startsWith("operator::")) {
+    $("<h3>").append($("<a>").attr("href", "#" + href).text(name + suffix)).attr("id", href).appendTo(head);
   }
   if (!details.is(":empty")) {
-    details.appendTo(container);
+    details.appendTo(head);
   }
   if (sym.type) {
-    type = sym.type[0] === "." ? parent.split(".")[0] + sym.type : sym.type;
-    $("<a>").addClass("reference").attr("href", "#" + type).text("→ " + type).appendTo(container);
+    type = sym.type[0] === "." ? href.split(".")[0] + sym.type : sym.type;
+    $("<a>").addClass("reference").attr("href", "#" + type).text("→ " + sym.type.split(".").pop()).appendTo(head);
+  }
+  if (isAny(sym)) {
+    $("<span>").addClass("reference").text("(any)").appendTo(head);
   }
   if (sym.doc) {
-    doc = $("<p>").addClass("doc").html(markdown.makeHtml(sym.doc)).appendTo(container);
+    doc = $("<p>").addClass("doc").html(markdown.makeHtml(sym.doc)).appendTo(head);
   }
   if (sym.name && sym.name.startsWith("operator::")) {
+    container.addClass("operator");
     if (typeof sym.params === "string") {
       sym.params = [
         {
@@ -126,11 +143,11 @@ inflateSymbol = function(sym, impl, container, parent = "") {
         }
       ];
     }
-    params = $("<ul>").addClass("params").appendTo(container);
+    params = $("<ul>").addClass("params body").appendTo(container);
     ref2 = sym.params;
     for (k = 0, len1 = ref2.length; k < len1; k++) {
       symbol = ref2[k];
-      inflateSymbol(symbol, null, params, href + ".params");
+      inflateSymbol(symbol, null, params, href + ".params." + symbol.name);
     }
     if (typeof sym.returns === "string") {
       sym.returns = [
@@ -140,24 +157,21 @@ inflateSymbol = function(sym, impl, container, parent = "") {
         }
       ];
     }
-    returns = $("<ul>").addClass("returns").appendTo(container);
+    returns = $("<ul>").addClass("returns body").appendTo(container);
     ref3 = sym.returns;
-    results = [];
     for (l = 0, len2 = ref3.length; l < len2; l++) {
       symbol = ref3[l];
-      results.push(inflateSymbol(symbol, null, returns, href + ".returns"));
+      inflateSymbol(symbol, null, returns, href + ".returns." + symbol.name);
     }
-    return results;
   } else if (sym.symbols) {
-    syms = $("<ul>").addClass("symbols").appendTo(container);
+    syms = $("<ul>").addClass("symbols body").appendTo(container);
     ref4 = sym.symbols;
-    results1 = [];
     for (m = 0, len3 = ref4.length; m < len3; m++) {
       symbol = ref4[m];
-      results1.push(inflateSymbol(symbol, null, syms, href));
+      inflateSymbol(symbol, null, syms, href + "." + symbol.name);
     }
-    return results1;
   }
+  return container;
 };
 
 //###############################################################################
@@ -174,31 +188,34 @@ loadSymbol = (symbol) => {
       return;
     }
     currentType = type;
-    return fetch(`./${type}.json`).then((resp) => {
+    return fetch(env + "/" + type + ".json").then((resp) => {
       return resp.json();
     }).then((sym) => {
       var container, h4;
       $(".container").remove();
       //#########
       container = $("<ul>").addClass("container").insertAfter("nav");
-      h4 = $("<h4>").html("<a href='stdtypes.org'>std::</a>" + `<a href='#${type}' class='active'>${type}</a>`).appendTo(container);
+      h4 = $("<h4>").html(`<a href='#${type}' class='active'>${env}::${type
+      // .split("/").join("::")
+}</a>`).appendTo(container);
       $("h3.active").removeClass("active");
-      inflateSymbol(sym, null, container);
+      inflateSymbol(sym, null, container, type).addClass("root");
       return $(document.getElementById(symbol)).addClass("active");
     });
   }
 };
 
 //###############################################################################
-fetch("./all.json").then((resp) => {
-  return resp.json();
-}).then(inflateNavbar);
-
-loadSymbol(document.location.hash.slice(1));
-
-$(window).on("hashchange", () => {
-  return loadSymbol(document.location.hash.slice(1));
-});
+loadEnv = (env) => {
+  window.env = env;
+  fetch(env + ".json").then((resp) => {
+    return resp.json();
+  }).then(inflateNavbar);
+  loadSymbol(document.location.hash.slice(1));
+  return $(window).on("hashchange", () => {
+    return loadSymbol(document.location.hash.slice(1));
+  });
+};
 
 $(".burger").on("click", function(event) {
   return $("nav").toggleClass("open");

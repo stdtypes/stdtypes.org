@@ -1,5 +1,70 @@
 {
-  "electric_current": {
+  "float": {
+    "desc": "Floating-point number",
+    "tags": [
+      "Primitive",
+      "Buildin"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable"
+  },
+  "go/fmt": {
+    "desc": "Formatted I/O",
+    "tags": [
+      "Go",
+      "golang"
+    ],
+    "time": "2018-04-23T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "symbols": [
+      "Errorf",
+      "Printf",
+      "State",
+      "Formatter"
+    ]
+  },
+  "go/io": {
+    "desc": "I/O",
+    "tags": [
+      "Go",
+      "golang"
+    ],
+    "time": "2018-04-23T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "symbols": [
+      "Closer"
+    ]
+  },
+  "go/net": {
+    "desc": "Networking",
+    "tags": [
+      "Go",
+      "golang"
+    ],
+    "time": "2018-04-23T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable",
+    "symbols": [
+      "Conn",
+      "Addr",
+      "Listen",
+      "Listener"
+    ]
+  },
+  "int": {
+    "desc": "Integer number",
+    "tags": [
+      "Primitive",
+      "Buildin"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable"
+  },
+  "scientific/electric_current": {
     "desc": "Electric current value",
     "tags": [
       "Scientific",
@@ -11,29 +76,9 @@
     "symbols": [
       "Value",
       "ToString"
-    ],
-    "impl": [
-      "CoffeeScript",
-      "JavaScript",
-      "Go"
     ]
   },
-  "float": {
-    "desc": "Floating-point number",
-    "tags": [
-      "Primitive",
-      "Buildin"
-    ],
-    "time": "2018-04-25T09:37:28.000Z",
-    "version": "1.0.0",
-    "stability": "stable",
-    "impl": [
-      "CoffeeScript",
-      "JavaScript",
-      "Go"
-    ]
-  },
-  "geolocation": {
+  "scientific/geolocation": {
     "desc": "Geographical location",
     "tags": [
       "Scientific",
@@ -46,45 +91,10 @@
       "Latitude",
       "Longitude",
       "DistanceTo"
-    ],
-    "impl": [
-      "CoffeeScript",
-      "JavaScript",
-      "Go"
     ]
   },
-  "int": {
-    "desc": "Integer number",
-    "tags": [
-      "Primitive",
-      "Buildin"
-    ],
-    "time": "2018-04-25T09:37:28.000Z",
-    "version": "1.0.0",
-    "stability": "stable",
-    "impl": [
-      "CoffeeScript",
-      "JavaScript",
-      "Go"
-    ]
-  },
-  "string": {
-    "desc": "String",
-    "tags": [
-      "Primitive",
-      "Buildin"
-    ],
-    "time": "2018-04-25T09:37:28.000Z",
-    "version": "1.0.0",
-    "stability": "stable",
-    "impl": [
-      "CoffeeScript",
-      "JavaScript",
-      "Go"
-    ]
-  },
-  "temperature": {
-    "desc": "Temperature with value and unit",
+  "scientific/temperature": {
+    "desc": "Temperature",
     "tags": [
       "Scientific",
       "SI"
@@ -97,11 +107,16 @@
       "Unit",
       "ToUnit",
       "ToString"
-    ],
-    "impl": [
-      "CoffeeScript",
-      "JavaScript",
-      "Go"
     ]
+  },
+  "string": {
+    "desc": "String",
+    "tags": [
+      "Primitive",
+      "Buildin"
+    ],
+    "time": "2018-04-25T09:37:28.000Z",
+    "version": "1.0.0",
+    "stability": "stable"
   }
 }

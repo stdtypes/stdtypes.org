@@ -1,48 +1,72 @@
-electric_current:
-  desc: Electric current value
-  version: 1.0.0
-  stability: stable
-  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
-  tags: [Scientific, SI]
-  symbols: [Value, ToString]
-  impl: [CoffeeScript, JavaScript, Go]
 float:
   desc: Floating-point number
   version: 1.0.0
   stability: stable
-  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  time: 2018-04-25T09:37:28.000Z
   tags: [Primitive, Buildin]
   symbols: []
-  impl: [CoffeeScript, JavaScript, Go]
-geolocation:
-  desc: Geographical location
+  impl: []
+go/fmt:
+  desc: Formatted I/O
   version: 1.0.0
   stability: stable
-  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
-  tags: [Scientific, Location]
-  symbols: [Latitude, Longitude, DistanceTo]
-  impl: [CoffeeScript, JavaScript, Go]
+  time: 2018-04-23T09:37:28.000Z
+  tags: [Go, golang]
+  symbols: [Errorf, Printf, State, Formatter]
+  impl: []
+go/io:
+  desc: I/O
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-23T09:37:28.000Z
+  tags: [Go, golang]
+  symbols: [Closer]
+  impl: []
+go/net:
+  desc: Networking
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-23T09:37:28.000Z
+  tags: [Go, golang]
+  symbols: [Conn, Addr, Listen, Listener]
+  impl: []
 int:
   desc: Integer number
   version: 1.0.0
   stability: stable
-  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  time: 2018-04-25T09:37:28.000Z
   tags: [Primitive, Buildin]
   symbols: []
-  impl: [CoffeeScript, JavaScript, Go]
+  impl: []
+scientific/electric_current:
+  desc: Electric current value
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Scientific, SI]
+  symbols: [Value, ToString]
+  impl: []
+scientific/geolocation:
+  desc: Geographical location
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Scientific, Location]
+  symbols: [Latitude, Longitude, DistanceTo]
+  impl: []
+scientific/temperature:
+  desc: Temperature
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Scientific, SI]
+  symbols: [Quantity, Unit, ToUnit, ToString]
+  impl: []
 string:
   desc: String
   version: 1.0.0
   stability: stable
-  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
+  time: 2018-04-25T09:37:28.000Z
   tags: [Primitive, Buildin]
   symbols: []
-  impl: [CoffeeScript, JavaScript, Go]
-temperature:
-  desc: Temperature with value and unit
-  version: 1.0.0
-  stability: stable
-  time: Wed Apr 25 2018 11:37:28 GMT+0200 (Mitteleuropäische Sommerzeit)
-  tags: [Scientific, SI]
-  symbols: [Quantity, Unit, ToUnit, ToString]
-  impl: [CoffeeScript, JavaScript, Go]
+  impl: []

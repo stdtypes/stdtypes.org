@@ -34,7 +34,7 @@ server = http.createServer (req, res) ->
     res.end()
     return
 
-  stream = fs.createReadStream "www/"+file
+  stream = fs.createReadStream file
   stream.pipe res
   stream.on "error", () ->
     console.log "#{ req.socket.remoteAddress } 404 #{ file }"

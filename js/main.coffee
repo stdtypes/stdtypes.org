@@ -7,9 +7,9 @@ inflateNavbar = (types) ->
     if not (g of groups)
       $ "<h2>"
         .text g
-        .appendTo "nav"
+        .appendTo ".index"
       groups[g] = $ "<ul>"
-        .appendTo "nav"
+        .appendTo ".index"
     group = groups[g]
     li = $ "<li>"
       .appendTo group
@@ -34,6 +34,8 @@ isObject = (sym) -> sym.symbols and
 isFunction = (sym) -> sym.symbols and
   sym.symbols.find (sym) => sym.name == "operator::()"
 
+isAny = (sym) -> sym.meta?.abstract && ! sym.symbols?.length && ! sym.type
+
 isPureFunction = (sym) -> ! isObject(sym) and isFunction(sym)
 
 
@@ -45,10 +47,18 @@ languages =
   Go: ".go"
   CoffeeScript: ".coffeescript"
 
+env = null
 
-inflateSymbol = (sym, impl, container, parent="") ->
 
-  href = if parent then parent+"."+sym.name else sym.name
+inflateSymbol = (sym, impl, container, href) ->
+
+  container = $ "<div>"
+    .addClass "symbol"
+    .appendTo container
+
+  head = $ "<div>"
+    .addClass "head level"+(href.split(".").length-1)
+    .appendTo container
 
   if (sym.params || sym.returns) and not sym.name.startsWith "operator::"
     if ! sym.symbols then sym.symbols = []
@@ -96,65 +106,78 @@ inflateSymbol = (sym, impl, container, parent="") ->
 
   heading = null
 
+  ###
   if name == "operator::()"
-    heading = $ "<h5>"
+    $ "<h5>"
       .text "Function Call"
+      .appendTo head
 
   else if name == "operator::new"
-    heading = $ "<h5>"
+    $ "<h5>"
       .text "Constructor"
+      .appendTo head
 
-  else if name
-    heading = $ "<h3>"
+  else
+  ###
+  if name and ! name.startsWith "operator::"
+    $ "<h3>"
       .append $("<a>").attr("href", "#"+href).text name+suffix
       .attr "id", href
-
-  container.append heading
-
-  if name == "operator::()"
-    heading.closest ".row"
-      .addClass "operator"
+      .appendTo head
 
   if ! details.is ":empty"
-    details.appendTo container
+    details.appendTo head
 
   if sym.type
-    type = if sym.type[0] == "." then parent.split(".")[0]+sym.type else sym.type
+
+    type = if sym.type[0] == "."
+      href.split(".")[0]+sym.type
+    else sym.type
+
     $ "<a>"
       .addClass "reference"
       .attr "href", "#"+type
-      .text "→ "+type
-      .appendTo container
+      .text "→ "+sym.type.split(".").pop()
+      .appendTo head
+
+  if isAny(sym)
+    $ "<span>"
+      .addClass "reference"
+      .text "(any)"
+      .appendTo head
 
   if sym.doc
     doc = $ "<p>"
       .addClass "doc"
       .html markdown.makeHtml sym.doc
-      .appendTo container
+      .appendTo head
 
   if sym.name and sym.name.startsWith "operator::"
+
+    container.addClass "operator"
 
     if typeof sym.params == "string"
       sym.params = [name: "", type: sym.params]
     params = $ "<ul>"
-      .addClass "params"
+      .addClass "params body"
       .appendTo container
-    inflateSymbol symbol, null, params, href+".params" for symbol in sym.params
+    inflateSymbol symbol, null, params, href+".params."+symbol.name for symbol in sym.params
 
     if typeof sym.returns == "string"
       sym.returns = [name: "", type: sym.returns]
     returns = $ "<ul>"
-      .addClass "returns"
+      .addClass "returns body"
       .appendTo container
-    inflateSymbol symbol, null, returns, href+".returns" for symbol in sym.returns
+    inflateSymbol symbol, null, returns, href+".returns."+symbol.name for symbol in sym.returns
 
   else if sym.symbols
 
     syms = $ "<ul>"
-      .addClass "symbols"
+      .addClass "symbols body"
       .appendTo container
+    inflateSymbol symbol, null, syms, href+"."+symbol.name for symbol in sym.symbols
 
-    inflateSymbol symbol, null, syms, href for symbol in sym.symbols
+  return container
 
 
 ################################################################################
@@ -176,7 +199,7 @@ loadSymbol = (symbol) =>
       return
     currentType = type
 
-    fetch "./#{type}.json"
+    fetch env+"/"+type+".json"
       .then (resp) => resp.json()
       .then (sym) =>
 
@@ -189,26 +212,33 @@ loadSymbol = (symbol) =>
           .addClass "container"
           .insertAfter "nav"
         h4 = $ "<h4>"
-          .html "<a href='stdtypes.org'>std::</a>"+
-            "<a href='##{ type }' class='active'>#{ type }</a>"
+          .html "<a href='##{ type }' class='active'>#{ env }::#{ type }</a>" # .split("/").join("::")
           .appendTo container
 
         $ "h3.active"
           .removeClass "active"
 
-        inflateSymbol sym, null, container
+        inflateSymbol sym, null, container, type
+          .addClass "root"
+
         $ document.getElementById symbol
           .addClass "active"
 
 ################################################################################
 
 
-fetch "./all.json"
-  .then (resp) => resp.json()
-  .then inflateNavbar
 
-loadSymbol document.location.hash[1..]
-$(window).on "hashchange", () => loadSymbol document.location.hash[1..]
+loadEnv = (env) =>
+
+  window.env = env
+
+  fetch env+".json"
+    .then (resp) => resp.json()
+    .then inflateNavbar
+
+  loadSymbol document.location.hash[1..]
+  $(window).on "hashchange", () => loadSymbol document.location.hash[1..]
+
 
 $ ".burger"
   .on "click", (event) ->

@@ -1,0 +1,73 @@
+name: net
+desc: Networking
+doc: Hello World :)
+tags: [ Go, golang ]
+time: 2018-04-23T09:37:28.000Z
+stability: stable
+version: 1.0.0
+symbols:
+  - name: Conn
+    doc: A network connection.
+    meta:
+      abstract: true
+  - name: Addr
+    doc: A network address.
+    symbols:
+      - name: Network
+        doc: Name of the network (for example, "tcp", "udp").
+        reciever: Addr
+        params: []
+        returns:
+          - name: network
+            type: string
+      - name: String
+        doc: String form of address (for example, "192.0.2.1:25", "[2001:db8::1]:80").
+        reciever: Addr
+        params: []
+        returns:
+          - name: network
+            type: string
+    meta:
+      abstract: true
+  - name: Listen
+    doc: Listen announces on the local network address.
+    params:
+      - name: network
+        doc: Must be "tcp", "tcp4", "tcp6", "unix" or "unixpacket".
+        type: string
+      - name: address
+        type: string
+    returns:
+      - name: listener
+        type: .Listener
+      - name: err
+        type: error
+  - name: Listener
+    symbols:
+      - name: Accept
+        doc: Accept waits for and returns the next connection to the listener.
+        reciever: Listener
+        params: []
+        returns:
+          - name: conn
+            type: .Conn
+          - name: err
+            type: error
+      - name: Close
+        doc:
+          Close closes the listener.
+          Any blocked Accept operations will be unblocked and return errors.
+        reciever: Listener
+        params: []
+        returns:
+          - name: err
+            type: error
+      - name: Addr
+        doc: Addr returns the listener's network address.
+        reciever: Listener
+        params: []
+        returns:
+          - name: addr
+            type: .Addr
+    meta:
+      abstract: true

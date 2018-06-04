@@ -1,3 +1,16 @@
+# Files created at install
+go.json
+go.yaml
+go/**/*.json
+
+std.json
+std.yaml
+std/**/*.json
+
+javascript.json
+javascript.yaml
+javascript/**/*.json
+
 # Logs
 logs
 *.log
@@ -56,4 +69,3 @@ typings/
 
 # dotenv environment variables file
 .env
-

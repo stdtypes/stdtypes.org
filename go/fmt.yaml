@@ -1,0 +1,75 @@
+name: fmt
+desc: Formatted I/O
+tags: [ Go, golang ]
+doc: Hello World :)
+time: 2018-04-23T09:37:28.000Z
+stability: stable
+version: 1.0.0
+symbols:
+  - name: Errorf
+    doc: Errorf formats according to a format specifier and returns the string as a value that satisfies error.
+    params:
+      - name: format
+        doc: Use format specifiers that will be replaced by the substitutions.
+        type: string
+      - name: subs
+        meta:
+          abstract: true
+    returns:
+      - name: err
+        type: error
+        doc: Error, if any.
+    meta:
+      constraints:
+        custom: ValidatePrintf
+    # examples:
+    #   doc: This parameters will print `Hello World, I <3 you!`.
+    #   params:
+    #     - Hello %s, I <%d you!
+    #     - World
+    #     - 3
+    #   return:
+    #     - nil
+  - name: Printf
+    doc: Printf formats according to a format specifier and writes to standard output. It returns the number of bytes written and any write error encountered.
+    params:
+      - name: format
+        doc: Use format specifiers that will be replaced by the substitutions.
+        type: string
+      - name: subs
+        meta:
+          abstract: true
+    returns:
+      - name: n
+        type: int
+        doc: Number of bytes written.
+      - name: err
+        type: error
+        doc: Error, if any.
+    meta:
+      variadic: true
+      constraints:
+        custom: ValidatePrintf
+    # examples:
+    #   doc: This parameters will print `Hello World, I <3 you!`.
+    #   params:
+    #     - Hello %s, I <%d you!
+    #     - World
+    #     - 3
+    #   return:
+    #     - 22
+    #     - nil
+  - name: State
+
+  - name: Formatter
+    doc: Formatter is the interface implemented by values with a custom formatter. The implementation of Format may call Sprint(f) or Fprint(f) etc. to generate its output.
+    symbols:
+      - name: Format
+        params:
+          - name: state
+            type: .State
+          - name: c
+            type: char
+        returns: []
+    meta:
+      abstract: true
