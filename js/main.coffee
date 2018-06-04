@@ -54,13 +54,18 @@ inflateReference = (ref, type) ->
 
   else
 
-    href = if type[0] == "."
-      ref.split(".")[0]+type
-    else type
+
+    if type[0] == "."
+      href = "#"+ref.split(".")[0]+type
+    else
+      if type in window.types
+        href = "#"+type
+      else
+        href = "/#"+type
 
     $ "<a>"
       .addClass "reference"
-      .attr "href", "#"+href
+      .attr "href", href
       .text "→ "+type.split(".").pop()
 
 
@@ -302,7 +307,7 @@ loadSymbol = (symbol) =>
 
 ################################################################################
 
-
+types = {}
 
 loadEnv = (env) =>
 
@@ -310,7 +315,9 @@ loadEnv = (env) =>
 
   fetch env+".json"
     .then (resp) => resp.json()
-    .then inflateNavbar
+    .then (types) =>
+      window.types = types
+      inflateNavbar types
 
   loadSymbol document.location.hash[1..]
   $(window).on "hashchange", () => loadSymbol document.location.hash[1..]

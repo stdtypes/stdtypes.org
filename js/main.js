@@ -1,4 +1,5 @@
-var currentType, env, findTemplate, inflateNavbar, inflateReference, inflateSymbol, inflateTemplate, isAny, isFunction, isObject, isPureFunction, languages, loadEnv, loadSymbol, markdown, templates;
+var currentType, env, findTemplate, inflateNavbar, inflateReference, inflateSymbol, inflateTemplate, isAny, isFunction, isObject, isPureFunction, languages, loadEnv, loadSymbol, markdown, templates, types,
+  indexOf = [].indexOf;
 
 inflateNavbar = function(types) {
   var g, group, groups, li, name, results, type;
@@ -54,8 +55,16 @@ inflateReference = function(ref, type) {
   if (templ) {
     return $("<a>").addClass("reference").attr("href", "#" + templ).text("→ Template " + type);
   } else {
-    href = type[0] === "." ? ref.split(".")[0] + type : type;
-    return $("<a>").addClass("reference").attr("href", "#" + href).text("→ " + type.split(".").pop());
+    if (type[0] === ".") {
+      href = "#" + ref.split(".")[0] + type;
+    } else {
+      if (indexOf.call(window.types, type) >= 0) {
+        href = "#" + type;
+      } else {
+        href = "/#" + type;
+      }
+    }
+    return $("<a>").addClass("reference").attr("href", href).text("→ " + type.split(".").pop());
   }
 };
 
@@ -262,11 +271,16 @@ loadSymbol = (symbol) => {
 };
 
 //###############################################################################
+types = {};
+
 loadEnv = (env) => {
   window.env = env;
   fetch(env + ".json").then((resp) => {
     return resp.json();
-  }).then(inflateNavbar);
+  }).then((types) => {
+    window.types = types;
+    return inflateNavbar(types);
+  });
   loadSymbol(document.location.hash.slice(1));
   return $(window).on("hashchange", () => {
     return loadSymbol(document.location.hash.slice(1));
