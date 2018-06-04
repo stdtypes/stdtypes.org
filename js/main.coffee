@@ -42,6 +42,80 @@ isPureFunction = (sym) -> ! isObject(sym) and isFunction(sym)
 ################################################################################
 
 
+inflateReference = (ref, type) ->
+
+  templ = findTemplate type
+  if templ
+
+    $ "<a>"
+      .addClass "reference"
+      .attr "href", "#"+templ
+      .text "→ Template "+type
+
+  else
+
+    href = if type[0] == "."
+      ref.split(".")[0]+type
+    else type
+
+    $ "<a>"
+      .addClass "reference"
+      .attr "href", "#"+href
+      .text "→ "+type.split(".").pop()
+
+
+################################################################################
+
+
+templates = []
+
+findTemplate = (name) ->
+  for templs in templates
+    for n of templs
+      if n == name
+        return templs[n]
+  return null
+
+inflateTemplate = (ref, template) ->
+
+  table = $ "<div>"
+    .addClass "table"
+
+  t = {}
+  for name of template
+    t[name] = ref+".template."+name
+  templates.push t
+
+  for name, templ of template
+
+    template.push
+
+    row = $ "<div>"
+      .addClass "row"
+      .appendTo table
+
+    $ "<h3>"
+      .addClass "column"
+      .text name
+      .attr "id", ref+".template."+name
+      .appendTo row
+
+    t = $ "<div>"
+      .addClass "column"
+      .text templ
+      .appendTo row
+
+    if templ == "number"
+      t.html "number (<a href='#int'>int</a> or <a href='#float'>float</a>)"
+    else
+      t.append inflateReference ref, templ
+
+  return table
+
+
+################################################################################
+
+
 languages =
   JavaScript: ".js"
   Go: ".go"
@@ -130,14 +204,7 @@ inflateSymbol = (sym, impl, container, href) ->
 
   if sym.type
 
-    type = if sym.type[0] == "."
-      href.split(".")[0]+sym.type
-    else sym.type
-
-    $ "<a>"
-      .addClass "reference"
-      .attr "href", "#"+type
-      .text "→ "+sym.type.split(".").pop()
+    inflateReference href, sym.type
       .appendTo head
 
   if isAny(sym)
@@ -156,6 +223,12 @@ inflateSymbol = (sym, impl, container, href) ->
 
     container.addClass "operator"
 
+    if sym.template
+      $ "<div>"
+        .append inflateTemplate href, sym.template
+        .addClass "template body"
+        .appendTo container
+
     if typeof sym.params == "string"
       sym.params = [name: "", type: sym.params]
     params = $ "<ul>"
@@ -169,6 +242,9 @@ inflateSymbol = (sym, impl, container, href) ->
       .addClass "returns body"
       .appendTo container
     inflateSymbol symbol, null, returns, href+".returns."+symbol.name for symbol in sym.returns
+
+    if sym.template
+      templates.pop()
 
   else if sym.symbols
 

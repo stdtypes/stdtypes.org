@@ -1,4 +1,4 @@
-var currentType, env, inflateNavbar, inflateSymbol, isAny, isFunction, isObject, isPureFunction, languages, loadEnv, loadSymbol, markdown;
+var currentType, env, findTemplate, inflateNavbar, inflateReference, inflateSymbol, inflateTemplate, isAny, isFunction, isObject, isPureFunction, languages, loadEnv, loadSymbol, markdown, templates;
 
 inflateNavbar = function(types) {
   var g, group, groups, li, name, results, type;
@@ -39,12 +39,63 @@ isFunction = function(sym) {
 };
 
 isAny = function(sym) {
-  var ref, ref1;
-  return ((ref = sym.meta) != null ? ref.abstract : void 0) && !((ref1 = sym.symbols) != null ? ref1.length : void 0) && !sym.type;
+  var ref1, ref2;
+  return ((ref1 = sym.meta) != null ? ref1.abstract : void 0) && !((ref2 = sym.symbols) != null ? ref2.length : void 0) && !sym.type;
 };
 
 isPureFunction = function(sym) {
   return !isObject(sym) && isFunction(sym);
+};
+
+//###############################################################################
+inflateReference = function(ref, type) {
+  var href, templ;
+  templ = findTemplate(type);
+  if (templ) {
+    return $("<a>").addClass("reference").attr("href", "#" + templ).text("→ Template " + type);
+  } else {
+    href = type[0] === "." ? ref.split(".")[0] + type : type;
+    return $("<a>").addClass("reference").attr("href", "#" + href).text("→ " + type.split(".").pop());
+  }
+};
+
+//###############################################################################
+templates = [];
+
+findTemplate = function(name) {
+  var j, len, n, templs;
+  for (j = 0, len = templates.length; j < len; j++) {
+    templs = templates[j];
+    for (n in templs) {
+      if (n === name) {
+        return templs[n];
+      }
+    }
+  }
+  return null;
+};
+
+inflateTemplate = function(ref, template) {
+  var name, row, t, table, templ;
+  table = $("<div>").addClass("table");
+  t = {};
+  for (name in template) {
+    t[name] = ref + ".template." + name;
+  }
+  templates.push(t);
+  for (name in template) {
+    templ = template[name];
+    template.push;
+    row = $("<div>").addClass("row").appendTo(table);
+    $("<h3>").addClass("column").text(name).attr("id", ref + ".template." + name).appendTo(row);
+    t = $("<div>").addClass("column").text(templ).appendTo(row);
+    if (templ === "number") {
+      t.html("number (<a href='#int'>int</a> or <a href='#float'>float</a>)");
+    } else {
+      t.append(inflateReference(ref, templ));
+    }
+  }
+  return table;
 };
 
 //###############################################################################
@@ -57,7 +108,7 @@ languages = {
 env = null;
 
 inflateSymbol = function(sym, impl, container, href) {
-  var details, doc, head, heading, i, impls, j, k, l, len, len1, len2, len3, m, name, params, ref, ref1, ref2, ref3, ref4, returns, stability, suffix, symbol, syms, type, version;
+  var details, doc, head, heading, i, impls, j, k, l, len, len1, len2, len3, m, name, params, ref1, ref2, ref3, ref4, ref5, returns, stability, suffix, symbol, syms, version;
   container = $("<div>").addClass("symbol").appendTo(container);
   head = $("<div>").addClass("head level" + (href.split(".").length - 1)).appendTo(container);
   if ((sym.params || sym.returns) && !sym.name.startsWith("operator::")) {
@@ -72,11 +123,11 @@ inflateSymbol = function(sym, impl, container, href) {
     });
   }
   details = $("<div>").addClass("details");
-  if ((ref = sym.meta) != null ? ref.impl : void 0) {
+  if ((ref1 = sym.meta) != null ? ref1.impl : void 0) {
     impls = $("<div>").addClass("implementation").appendTo(details);
-    ref1 = sym.meta.impl;
-    for (j = 0, len = ref1.length; j < len; j++) {
-      i = ref1[j];
+    ref2 = sym.meta.impl;
+    for (j = 0, len = ref2.length; j < len; j++) {
+      i = ref2[j];
       if (i in languages) {
         $("<a>").attr({
           href: href + languages[i],
@@ -124,8 +175,7 @@ inflateSymbol = function(sym, impl, container, href) {
     details.appendTo(head);
   }
   if (sym.type) {
-    type = sym.type[0] === "." ? href.split(".")[0] + sym.type : sym.type;
-    $("<a>").addClass("reference").attr("href", "#" + type).text("→ " + sym.type.split(".").pop()).appendTo(head);
+    inflateReference(href, sym.type).appendTo(head);
   }
   if (isAny(sym)) {
     $("<span>").addClass("reference").text("(any)").appendTo(head);
@@ -135,6 +185,9 @@ inflateSymbol = function(sym, impl, container, href) {
   }
   if (sym.name && sym.name.startsWith("operator::")) {
     container.addClass("operator");
+    if (sym.template) {
+      $("<div>").append(inflateTemplate(href, sym.template)).addClass("template body").appendTo(container);
+    }
     if (typeof sym.params === "string") {
       sym.params = [
         {
@@ -144,9 +197,9 @@ inflateSymbol = function(sym, impl, container, href) {
       ];
     }
     params = $("<ul>").addClass("params body").appendTo(container);
-    ref2 = sym.params;
-    for (k = 0, len1 = ref2.length; k < len1; k++) {
-      symbol = ref2[k];
+    ref3 = sym.params;
+    for (k = 0, len1 = ref3.length; k < len1; k++) {
+      symbol = ref3[k];
       inflateSymbol(symbol, null, params, href + ".params." + symbol.name);
     }
     if (typeof sym.returns === "string") {
@@ -158,16 +211,19 @@ inflateSymbol = function(sym, impl, container, href) {
       ];
     }
     returns = $("<ul>").addClass("returns body").appendTo(container);
-    ref3 = sym.returns;
-    for (l = 0, len2 = ref3.length; l < len2; l++) {
-      symbol = ref3[l];
+    ref4 = sym.returns;
+    for (l = 0, len2 = ref4.length; l < len2; l++) {
+      symbol = ref4[l];
       inflateSymbol(symbol, null, returns, href + ".returns." + symbol.name);
+    }
+    if (sym.template) {
+      templates.pop();
     }
   } else if (sym.symbols) {
     syms = $("<ul>").addClass("symbols body").appendTo(container);
-    ref4 = sym.symbols;
-    for (m = 0, len3 = ref4.length; m < len3; m++) {
-      symbol = ref4[m];
+    ref5 = sym.symbols;
+    for (m = 0, len3 = ref5.length; m < len3; m++) {
+      symbol = ref5[m];
       inflateSymbol(symbol, null, syms, href + "." + symbol.name);
     }
   }

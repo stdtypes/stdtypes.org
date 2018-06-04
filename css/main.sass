@@ -32,6 +32,7 @@ nav
 .index
   flex-grow: 1
   overflow: auto
+  padding: 20px 0
 
 h1
   font-size: 25px
@@ -54,7 +55,7 @@ h4
   font-size: 16px
   letter-spacing: 2px
   font-weight: normal
-  margin: 30px 30px 8px
+  margin: 10px 30px 8px
 
 h5
   font-size: 14px
@@ -108,9 +109,11 @@ p
 
 .nav
   font-size: 20px
-  display: flex
+  display: block
   flex-direction: row
   text-align: center
+  height: 28px
+  white-space: nowrap
 
   img
     height: 20px
@@ -120,7 +123,10 @@ p
     vertical-align: top
 
   li
+    vertical-align: top
     width: 33.3%
+    box-sizing: border-box
+    display: inline-block
 
     &.active
       background: transparentize(#2194CE, .8)
@@ -138,7 +144,7 @@ p
 
 .container
   display: block
-  margin: 30px 20px
+  padding: 30px 20px
   max-width: 750px
   min-height: calc(100% - 86px)
   transition: transform .3s, opacity .3s
@@ -193,6 +199,31 @@ p
     font-size: 50px
     color: rgba(34,34,34,.2)
     pointer-events: none
+
+.table
+  display: table
+  border-collapse: separate
+
+.row
+  display: table-row
+
+.column
+  display: table-cell
+  padding: 3px 8px
+
+.template
+  padding: 10px 20px
+  font-size: 15px
+
+  &:before
+    content: 'Templates'
+    font-size: 14px
+    border-bottom: 1px dashed #737373
+    display: block
+    width: 200px
+    padding-left: 10px
+    font-style: italic
+    margin-bottom: 4px
 
 .unset
   transform: translateX(-6px)
@@ -380,12 +411,13 @@ h3.active
 
     input
       width: calc(100% - 50px)
-      margin: 14px 20px 30px
+      margin: 14px 20px 10px
       font-size: 20px
       padding: 4px 12px
       display: block
 
   .nav
+    height: 50px
     a
       padding: 16px 8px
       height: auto
@@ -409,6 +441,7 @@ h3.active
 
   .container
     margin: 10px 0px
+    padding: 0
 
   .params, .returns
     width: auto
