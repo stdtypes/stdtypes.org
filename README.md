@@ -23,6 +23,44 @@ A JavaScript types library is under development...
 
 -------
 
+# Project Structure
+
+```
+Project files:
+--+ css/    CSS files for use with the website
+  |         .sass translates to .css
+  + js/     JS files for use with the website
+  |         .coffee (CoffeeScript) translates to .js
+  + img/    Images for use with the website
+  |
+  + package.json    NPM Package
+  + scripts/        Node.js / NPM scrips
+  |                   Convert all .yaml files to .json:
+  |                   $ npm run yaml2json
+  |                   Run a local webserver:
+  |                   $ npm run live
+  + index.html    Frontpage for std types
+  + go.html         for go types
+  + js.html         for JavaScript types
+  |
+  + std/          Standart type definitions
+  + go/           Go type definitions
+  + javascript/   JavaScript type definitions
+  |
+
+Files created with $ npm run yaml2json:
+(Those files are not uploaded to GitHub.)
+  |
+  + std/ .json files (corresponds with a .yaml file)
+  + std.json    list of all types in std/ (json)
+  + std.yaml    list of all types in std/ (yaml)
+  |
+  + go/ . json files
+  + go.json
+  + go.yaml
+
+```
+
 # Type definitions
 
 A type definition describes a data type, a package (like go pacakges or npm pacakges) or any other API type.
