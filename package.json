@@ -8,13 +8,17 @@
   "license": "MIT",
   "scripts": {
     "live": "node scripts/live",
-    "yaml2json": "node scripts/yaml2json"
+    "yaml2json": "node scripts/yaml2json",
+    "coffee2js": "node scripts/coffee2js",
+    "sass2css": "node scripts/sass2css",
+    "install": "npm run coffee2js && npm run sass2css && npm run yaml2json"
   },
   "engines": {
     "node": ">=8.0.0"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "js-yaml": "^3.11.0"
+  "dependencies": {
+    "coffeescript": "^2.3.0",
+    "js-yaml": "^3.11.0",
+    "node-sass": "^4.9.0"
   }
 }

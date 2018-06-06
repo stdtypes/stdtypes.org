@@ -11,6 +11,13 @@ javascript.json
 javascript.yaml
 javascript/**/*.json
 
+css/main.min.css
+
+js/main.js
+scripts/live.js
+scripts/sass2css.js
+scripts/yaml2json.js
+
 # Logs
 logs
 *.log

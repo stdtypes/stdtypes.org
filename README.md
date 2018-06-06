@@ -4,13 +4,13 @@ Type definitions, implementations and visualizations for common data structures 
 
 For now, there are three environments defined:
 
-## [std::](https://github.com/stdtypes/stdtypes.org/tree/master/std)
+## [std::](https://github.com/stdtypes/stdtypes.org/tree/master/std) Standart-Types
 
 The _Standard-Types_ collection is a list of common data structures like scientific
 types (temperature or geolocation) or user management types (like user or person).
 
 
-## [go](https://github.com/stdtypes/stdtypes.org/tree/master/std)
+## [go](https://github.com/stdtypes/stdtypes.org/tree/master/std) (Golang)
 
 The _Go_ collection lists packeges from the programming language [go](https://golang.org/).
 Have a look at the offical go [packages library](https://golang.org/pkg/).
@@ -59,13 +59,31 @@ Files created with $ npm run yaml2json:
   + go.json
   + go.yaml
 
+
 ```
+
+# NPM Scripts
+
+There are a few scripts to make development easier.
+Remember to install [Node.js](https://nodejs.org) first as we need Node.js and NPM (NPM is shipped together with Node.js).
+
+Script     | What it does
+-----------|------------------------------
+`$npm run yaml2json` | Convert all `.yaml` type definitions to `.json` files that are easy machine readable and for better use with the website.
+`$npm run coffee2js` | Convert all `.coffee` script files to `.js`.
+`$npm run sass2css`  | Convert all `.sass` stylesheets to `.css`.
+`$npm run live`      | Run a simple webserver on your local machine which brings up the website at http://locahost.
+
+Run these scripts whenever you made changes to a yaml, coffee or sass file.
+
 
 # Type definitions
 
 A type definition describes a data type, a package (like go pacakges or npm pacakges) or any other API type.
 
 In this project, a type definition corresponds with a single `.yaml` file.
+
+Documenation (the _'doc'_ field) is written in Markdown. If you are not familiar with markdown, have a quick look at the GitHub [Mastering Markdown](https://guides.github.com/features/mastering-markdown/) guide.
 
 Here are a few examples of definitions and what a implementation could look like with JavaScript.
 
@@ -143,12 +161,10 @@ Just download this repository using the git command line tool or click 'Open in 
 $ git clone https://github.com/stdtypes/stdtypes.org.git
 ```
 
-You will need [Node.js](https://nodejs.org/en/) to build some essential files.
-
-First, convert all `.yaml` type definitions to `.json` files that are easy machine readable and for better use with the website.
+You will need [Node.js](https://nodejs.org/en/) to build some essential files and install dependencies for this project.
 
 ```
-$ npm run yaml2json
+$ npm install
 ```
 
 To run a simple webserver on your machine, use the simple http-server that comes with this project.
