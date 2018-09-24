@@ -1,6 +1,6 @@
-name: geolocation
-desc: Geographical location
+name: Geolocation
 tags: [ Scientific, Location ]
+version: 1.0.0
 doc:
   A _position_ on earth, defined by latitude and longitude.
   See [Wiki/Geographic Coordinate System](https://en.wikipedia.org/wiki/Geographic_coordinate_system).
@@ -10,22 +10,32 @@ doc:
 
 
   [Djexplo / Wikimedia Commons]
-time: 2018-04-25T09:37:28.000Z
-version: 1.0.0
-stability: stable
 symbols:
-  - name: Latitude
+  - name: operator::new
+    in:
+      - name: Latitude
+        type: float
+        meta:
+          default: 0
+      - name: Longitude
+        type: float
+        meta:
+          default: 0
+    out:
+      - name: loc
+        type: ./Geolocation
+  - name: .Latitude
     doc: Position Latitude.
     type: float
-  - name: Longitude
+  - name: .Longitude
     doc: Position Longitude.
     type: float
-  - name: DistanceTo
+  - name: .DistanceTo
     doc: Distance between two points along the earth surface in *km*.
-    params:
+    in:
       - name: other
-        type: geolocation
-    returns:
+        type: ./Geolocation
+    out:
       - name: dist
         type: float
 examples:

@@ -1,0 +1,17 @@
+{
+  "geolocation": {
+    "versions": [
+      "1.0.0"
+    ],
+    "name": "Geolocation",
+    "tags": [
+      "Scientific",
+      "Location"
+    ],
+    "symbols": [
+      ".Latitude",
+      ".Longitude",
+      ".DistanceTo"
+    ]
+  }
+}

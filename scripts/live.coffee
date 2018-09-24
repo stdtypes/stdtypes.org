@@ -11,6 +11,7 @@ contentTypes =
   ".coffee": "application/vnd.coffeescript"
   ".scss": "application/octet-stream"
   ".map": "application/octet-stream"
+  ".comp": "application/vnd.adjutant.component"
   ".ttf": "font/ttf"
   ".woff": "font/woff"
   ".woff2": "font/woff2"
@@ -27,6 +28,9 @@ server = http.createServer (req, res) ->
 
   ext = path.extname file
   contentType = contentTypes[ext]
+
+  if ext == ".json"
+    res.setHeader "Access-Control-Allow-Origin", "*"
 
   if not contentType
     console.log "#{ req.socket.remoteAddress } 404 #{ file }"

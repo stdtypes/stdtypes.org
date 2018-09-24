@@ -1,0 +1,16 @@
+name: Error
+tags: [ Buildin ]
+version: 1.0.0
+doc:
+  The error built-in interface type is the conventional interface for representing
+  an error condition, with the nil value representing no error.
+symbols:
+  - name: .Error
+    in: []
+    out:
+      - name: err
+        type: string
+    doc: Error string representation.
+meta:
+  abstract: true
+  color: "#c16b6b"

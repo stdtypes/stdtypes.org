@@ -1,10 +1,13 @@
-name: net
-desc: Networking
-doc: Hello World :)
+name: Networking
 tags: [ Go, golang ]
-time: 2018-04-23T09:37:28.000Z
-stability: stable
 version: 1.0.0
+doc:
+  Package net provides a portable interface for network I/O, including TCP/IP,
+  UDP, domain name resolution, and Unix domain sockets.
+
+  Although the package provides access to low-level networking primitives,
+  most clients will need only the basic interface provided by the Dial, Listen,
+  and Accept functions and the associated Conn and Listener interfaces.
 symbols:
   - name: Conn
     doc: A network connection.
@@ -13,61 +16,56 @@ symbols:
   - name: Addr
     doc: A network address.
     symbols:
-      - name: Network
+      - name: .Network
         doc: Name of the network (for example, "tcp", "udp").
-        reciever: Addr
-        params: []
-        returns:
+        in: []
+        out:
           - name: network
             type: string
-      - name: String
+      - name: .String
         doc: String form of address (for example, "192.0.2.1:25", "[2001:db8::1]:80").
-        reciever: Addr
-        params: []
-        returns:
+        in: []
+        out:
           - name: network
             type: string
     meta:
       abstract: true
   - name: Listen
     doc: Listen announces on the local network address.
-    params:
+    in:
       - name: network
         doc: Must be "tcp", "tcp4", "tcp6", "unix" or "unixpacket".
         type: string
       - name: address
         type: string
-    returns:
+    out:
       - name: listener
-        type: .Listener
+        type: "#Listener"
       - name: err
         type: error
   - name: Listener
     symbols:
-      - name: Accept
+      - name: .Accept
         doc: Accept waits for and returns the next connection to the listener.
-        reciever: Listener
-        params: []
-        returns:
+        in: []
+        out:
           - name: conn
-            type: .Conn
+            type: "#Conn"
           - name: err
             type: error
-      - name: Close
+      - name: .Close
         doc:
           Close closes the listener.
           Any blocked Accept operations will be unblocked and return errors.
-        reciever: Listener
-        params: []
-        returns:
+        in: []
+        out:
           - name: err
             type: error
-      - name: Addr
+      - name: .Addr
         doc: Addr returns the listener's network address.
-        reciever: Listener
-        params: []
-        returns:
+        in: []
+        out:
           - name: addr
-            type: .Addr
+            type: "#Addr"
     meta:
       abstract: true

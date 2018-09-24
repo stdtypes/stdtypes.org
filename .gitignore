@@ -2,14 +2,15 @@
 go.json
 go.yaml
 go/**/*.json
+go/**/*.yaml
+!go/**/*@*.yaml
 
-std.json
-std.yaml
-std/**/*.json
 
-javascript.json
-javascript.yaml
-javascript/**/*.json
+js.json
+js.yaml
+js/**/*.json
+js/**/*.yaml
+!js/**/*@*.yaml
 
 css/main.min.css
 

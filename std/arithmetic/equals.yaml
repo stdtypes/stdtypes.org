@@ -7,11 +7,11 @@ version: 1.0.0
 stability: stable
 symbols:
   - name: operator::()
-    params:
+    in:
       - name: a
         type: (any)
       - name: b
         type: (any)
-    returns:
+    out:
       - name: eq
         type: bool

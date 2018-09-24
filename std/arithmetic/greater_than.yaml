@@ -11,21 +11,21 @@ symbols:
     template:
       A: number
       B: number
-    params:
+    in:
       - name: a
         type: A
       - name: b
         type: B
-    returns:
+    out:
       - name: gt
         type: bool
   - name: operator::()
     doc: String comparison.
-    params:
+    in:
       - name: a
         type: string
       - name: b
         type: string
-    returns:
+    out:
       - name: diff
         type: bool

@@ -1,7 +1,0 @@
-name: byte
-desc: Byte
-tags: [ Primitive, Buildin ]
-doc:
-time: 2018-04-25T09:37:28.000Z
-version: 1.0.0
-stability: stable

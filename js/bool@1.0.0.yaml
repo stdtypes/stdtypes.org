@@ -1,0 +1,9 @@
+name: Boolean
+tags: [ Primitive, True, False ]
+version: 1.0.0
+doc:
+  The Boolean data type is a data type having two values, usually denoted true and false.
+  [Wiki/Boolean](https://en.wikipedia.org/wiki/Boolean_data_type).
+meta:
+  components:
+    default: "bool/default.comp.html"

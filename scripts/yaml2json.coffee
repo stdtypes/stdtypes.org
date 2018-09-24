@@ -1,54 +1,21 @@
 yaml2json = require "js-yaml"
 fs = require "fs"
+semver = require "semver"
+glob = require "glob"
+path = require "path"
+
+
+copy = (from, to) ->
+  fs.createReadStream from
+    .pipe fs.createWriteStream to
+
 
 options =
   encoding: "utf8"
 
-all = {}
+previews = {}
 
-searchPath = (path) ->
-  files = fs.readdirSync path
-  for file in files
-
-    name = path + "/" + file
-
-    stat = fs.statSync name
-
-    if stat.isDirectory()
-      searchPath name
-
-    else if stat.isFile()
-      if file.endsWith ".yaml"
-
-        id = name[name.indexOf("/")+1..-6]
-
-        console.log name + " > " + name[..-6] + ".json"
-
-        yaml = fs.readFileSync name, options
-        opject = yaml2json.safeLoad yaml,
-          filename: file
-
-        if !opject.name
-          console.warn "file did not export a .name field!"
-          continue
-
-        all[id] =
-          desc: opject.desc
-          tags: opject.tags
-          time: opject.time
-          version: opject.version
-          stability: opject.stability
-        if opject.symbols
-          all[id].symbols = opject.symbols
-            .map (sym) => sym.name
-            .filter (name) => name && !name.startsWith "operator::"
-
-        json = JSON.stringify opject, null, 2
-        fs.writeFileSync name.substring(0 , name.length - 4) + "json", json
-
-
-
-
+###
 all2yaml = (sym) =>
   Object.keys(all)
     .map (key) =>
@@ -61,18 +28,54 @@ all2yaml = (sym) =>
       "  tags: [#{sym.tags.join(", ")}]\n"+
       "  symbols: [#{if sym.symbols then sym.symbols.join(", ") else ""}]"
     .join "\n"
+###
+
+translateLib = (lib) =>
+  previews = {}
+
+  for file in glob.sync lib+"/**/*@*.yaml"
+
+    basename = path.basename file, ".yaml"
+    console.log "[#{lib}] #{file} > .json"
+
+    yaml = fs.readFileSync file, options
+    pack = yaml2json.safeLoad yaml,
+      filename: file
+
+    [packName, version]  = basename.split "@"
+
+    if packName of previews
+      preview = previews[packName]
+      preview.versions.push version
+      if ! preview.versions.find (v) => semver.gt v, version
+        preview.name = pack.name
+        preview.tags = pack.tags
+        if pack.symbols
+          preview.symbols = pack.symbols
+            .map (sym) => sym.name
+            .filter (name) => name && !name.startsWith "operator::"
+    else
+      preview = previews[packName] =
+        versions: [version]
+        name: pack.name
+        tags: pack.tags
+      if pack.symbols
+        preview.symbols = pack.symbols
+          .map (sym) => sym.name
+          .filter (name) => name && !name.startsWith "operator::"
+
+    json = JSON.stringify pack, null, 2
+    fs.writeFileSync path.dirname(file) + "/" + basename + ".json", json
+
+    preview.versions.sort semver.lt
+    latest = path.dirname(file)+"/"+packName+"@"+preview.versions[0]+".json"
+    copy latest, path.dirname(file)+"/"+packName+".json"
+
+  console.log "[#{lib}] (all previews) > #{ lib }.json"
+  fs.writeFileSync lib+".json", JSON.stringify previews, null, 2
+  # console.log "(all) > #{ path }.yaml"
+  # fs.writeFileSync path+".yaml", all2yaml()
 
 
-translatePath = (path) =>
-  all = {}
-
-  searchPath path
-
-  console.log "(all) > #{ path }.json"
-  fs.writeFileSync path+".json", JSON.stringify all, null, 2
-  console.log "(all) > #{ path }.yaml"
-  fs.writeFileSync path+".yaml", all2yaml()
-
-
-translatePath "go"
-translatePath "std"
+translateLib "go"
+translateLib "js"

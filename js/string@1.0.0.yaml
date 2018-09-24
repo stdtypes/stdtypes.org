@@ -1,0 +1,7 @@
+name: String
+tags: [ Primitive, Buildin ]
+version: 1.0.0
+doc:
+  A string is traditionally a sequence of characters, either as a literal
+  constant or as some kind of variable. See
+  [Wiki/String](https://en.wikipedia.org/wiki/String_(computer_science)).

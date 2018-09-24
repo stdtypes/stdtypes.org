@@ -28,6 +28,7 @@ nav
   box-sizing: border-box
   display: flex
   flex-direction: column
+  border-right: 1px solid #dcdcdc
 
 .index
   flex-grow: 1
@@ -96,7 +97,7 @@ ul
 
 li
   padding: 0
-  a
+  > a
     padding: 3px 25px
     display: block
     color: #2194CE
@@ -106,17 +107,98 @@ p
   margin: 0
   font-size: 15px
 
+nav h3
+  margin: 0
+  padding: 3px 25px
+  display: block
+  color: lighten(#555, 15%)
+  user-select: none
+
+  &.opener
+    cursor: pointer
+
+    &:before
+      content: '▶'
+      font-size: 12px
+      display: inline-block
+      margin-right: 10px
+      vertical-align: bottom
+      transition: .1s
+
+    &.open:before
+      transform: rotate(90deg)
+
+  ~ ul
+    display: none
+
+  &.open ~ ul
+    display: block
+
+.packager
+  li
+    border-top: 1px solid #dcdcdc
+
+  input
+    font-size: 14px
+
+  img
+    max-height: 16px
+    max-width: 30px
+    margin: 10px 8px 0 30px
+    vertical-align: middle
+
+  h4
+    font-size: 14px
+    display: inline-block
+    margin: 10px 10px 0
+    vertical-align: middle
+
+
+.link
+  display: block
+  font-size: 16px
+  line-height: 24px
+  height: 50px
+  box-sizing: border-box
+  color: #585858
+  cursor: pointer
+
+  &:hover
+    background: #e0e0e0
+    text-decoration: none
+
+  &.active
+    background: transparentize(#2194CE, .8)
 
 .nav
-  font-size: 20px
   display: block
   flex-direction: row
   text-align: center
   height: 28px
   white-space: nowrap
+  position: relative
+  border-top: 1px solid #dcdcdc
+
+  aside
+    display: none
+    position: absolute
+    bottom: 100%
+    left: 0
+    right: 0
+    padding: 10px
+    background: #e0e0e0
+    white-space: normal
+    text-align: left
+    font-size: 15px
+    border-top: 1px solid #dcdcdc
+
+    > a
+      color: #2194CE
 
   img
-    height: 20px
+    height: 24px
+    margin: 6px
+    display: block
 
   span
     display: inline-block
@@ -124,23 +206,18 @@ p
 
   li
     vertical-align: top
-    width: 33.3%
+    width: 50%
     box-sizing: border-box
     display: inline-block
 
-    &.active
-      background: transparentize(#2194CE, .8)
-
-  a
-    display: block
-    padding: 4px 8px 2px
-    height: 28px
-    box-sizing: border-box
-    color: #585858
-    cursor: pointer
+    &:not(:last-child)
+      border-right: 1px solid #dcdcdc
 
     &:hover
       background: #e0e0e0
+
+      aside
+        display: block
 
 .container
   display: block
@@ -189,6 +266,12 @@ p
 .symbol
   margin-bottom: 30px
 
+.root > .symbols > .symbol
+  border: 1px solid #dcdcdc
+
+.symbol:last-child
+  margin-bottom: 0
+
 /*.operator
   position: relative
   &:before
@@ -199,6 +282,10 @@ p
     font-size: 50px
     color: rgba(34,34,34,.2)
     pointer-events: none
+
+.operator
+  .symbols
+    border: 1px solid #b1b1b1
 
 .table
   display: table
@@ -213,7 +300,11 @@ p
 
 .template
   padding: 10px 20px
+  margin-bottom: 20px
   font-size: 15px
+
+  h3
+    font-size: 15px
 
   &:before
     content: 'Templates'
@@ -282,6 +373,11 @@ p
   background: #2194CE
   color: #fff
 
+.experimental
+  background: #ffb685
+  color: #616161
+
+
 .reference
   font-size: 15px
   line-height: 22px
@@ -291,10 +387,13 @@ footer
 
 .params, .returns
   display: inline-block
-  width: 335px
+  // width: 335px
   margin: 10px 20px
   vertical-align: top
   background: none
+
+  // .params, .returns
+  //  width: auto
 
   &:before,
   &:after
@@ -313,6 +412,7 @@ footer
 
   .symbol
     margin-bottom: 0
+    border: none
 
   .head,
   .body
@@ -322,10 +422,10 @@ footer
     background: none
     margin: 0px 10px 0px 0px
     padding: 2px 24px 2px 8px
+    font-size: 15px
 
     color: #555
-    a
-      font-size: 15px
+
     &:before
       content: "- "
       color: inherit

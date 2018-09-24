@@ -18,14 +18,14 @@ symbols:
       hint: [ °F, °C, K ]
   - name: ToUnit
     doc: Converts this temperature to another unit.
-    params:
+    in:
       - name: Unit
         type: .Unit
-    returns: []
+    out: []
   - name: ToString
     doc: String representation - value and type.
-    params: []
-    returns:
+    in: []
+    out:
       - name: str
         type: string
 meta:

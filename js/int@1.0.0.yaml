@@ -1,0 +1,7 @@
+name: Integer
+tags: [ Primitive, Buildin, Integer ]
+version: 1.0.0
+doc:
+  An integer is a datum of integral data type, a data type that represents some
+  range of mathematical integers. See
+  [Wiki/Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)).

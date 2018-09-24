@@ -18,7 +18,9 @@
   },
   "dependencies": {
     "coffeescript": "^2.3.0",
+    "glob": "^7.1.2",
     "js-yaml": "^3.11.0",
-    "node-sass": "^4.9.0"
+    "node-sass": "^4.9.0",
+    "semver": "^5.5.0"
   }
 }

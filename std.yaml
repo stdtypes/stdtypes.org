@@ -1,0 +1,84 @@
+(any):
+  desc: Any Type, Placeholder
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Other]
+  symbols: []
+arithmetic/equals:
+  desc: Equals '='
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Arithmetic, Math]
+  symbols: []
+arithmetic/greater_than:
+  desc: Greater Then '>'
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Arithmetic, Math]
+  symbols: []
+bool:
+  desc: Boolean
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Primitive, true, false]
+  symbols: []
+byte:
+  desc: Byte
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Primitive, Buildin]
+  symbols: []
+char:
+  desc: Character
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Primitive, Buildin]
+  symbols: []
+float:
+  desc: Floating-point number
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Primitive, Buildin]
+  symbols: []
+int:
+  desc: Integer number
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Primitive, Buildin]
+  symbols: []
+scientific/electric_current:
+  desc: Electric current value
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Scientific, SI]
+  symbols: [Value, ToString]
+scientific/geolocation:
+  desc: Geographical location
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Scientific, Location]
+  symbols: [.Latitude, .Longitude, DistanceTo]
+scientific/temperature:
+  desc: Temperature
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Scientific, SI]
+  symbols: [Quantity, Unit, ToUnit, ToString]
+string:
+  desc: String
+  version: 1.0.0
+  stability: stable
+  time: 2018-04-25T09:37:28.000Z
+  tags: [Primitive, Buildin]
+  symbols: [GetLength]

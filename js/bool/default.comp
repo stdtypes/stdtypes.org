@@ -1,0 +1,14 @@
+doctype "html"
+
+head
+	title "Boolean Default Component"
+
+body
+	input = input [type="checkbox"]
+	label "Checkbox"
+
+script [method="getValue"]
+	input = @#.input @
+	value = HTMLInputElement/Number#.value input
+	return value
+	

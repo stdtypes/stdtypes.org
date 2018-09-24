@@ -11,8 +11,8 @@ symbols:
     type: float
   - name: ToString
     doc: "String representation."
-    params: []
-    returns:
+    in: []
+    out:
       - name: str
         type: string
 meta:

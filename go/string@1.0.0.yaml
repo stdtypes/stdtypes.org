@@ -1,0 +1,27 @@
+name: String
+tags: [ Primitive, Buildin ]
+version: 1.0.0
+doc:
+  A string is traditionally a sequence of characters, either as a literal
+  constant or as some kind of variable. See
+  [Wiki/String](https://en.wikipedia.org/wiki/String_(computer_science)).
+symbols:
+  - name: operator::new
+    in:
+      - name: str
+        type: String
+        meta:
+          name: ""
+    out:
+      - name: str
+        type: String
+        meta:
+          name: ""
+    meta:
+      input:
+        editor:
+          component: stdtypes.org/string
+          url: string/editor.js
+meta:
+  color: "#a8caea"
+  name: str

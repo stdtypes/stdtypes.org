@@ -1,0 +1,15 @@
+name: io
+desc: I/O
+tags: [ Go, golang ]
+version: 1.0.0
+symbols:
+  - name: Closer
+    doc: A interface implementing a _close()_ method.
+    symbols:
+      - name: .Close
+        in: []
+        out:
+          - name: err
+            type: error
+    meta:
+      abstract: true

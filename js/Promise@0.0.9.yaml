@@ -1,0 +1,111 @@
+name: Promise
+tags: [ Async ]
+version: 0.0.9
+doc:
+  The Promise object represents the eventual completion (or failure) of an
+  asynchronous operation, and its resulting value.
+
+  ![Promise Chain](https://mdn.mozillademos.org/files/15911/promises.png)
+templates:
+  - name: Resolver
+    type: class
+  - name: Rejector
+    type: class
+symbols:
+  - name: operator::new
+    in:
+      - name: Executor
+        doc:
+          The executor function is executed immediately by the Promise implementation,
+          passing resolve and reject functions (the executor is called before the Promise
+          constructor even returns the created object). The executor normally
+          initiates some asynchronous work, and then, once that completes, either calls
+          the resolve function to resolve the promise or else rejects it if an error occurred.
+
+          If an error is thrown in the executor function, the promise is rejected.
+          The return value of the executor is ignored.
+        in:
+          - name: resolve
+            doc:
+              The resolve and reject functions, when called,
+              resolve or reject the promise, respectively.
+            in:
+              - name: value
+                type: Resolver
+            out: []
+          - name: reject
+            in:
+              - name: reason
+                type: Rejector
+            out: []
+        out: []
+    out:
+      - name: promise
+        type: ./Promise@0.0.9
+
+
+  - name: .then
+    in:
+      - name: onFulfilled
+        doc:
+          A Function called if the Promise is fulfilled.
+          This function has one argument, the fulfillment value.
+        in:
+          - name: value
+            type: Resolver
+        out: []
+      - name: onRejected
+        doc:
+          A Function called if the Promise is rejected.
+          This function has one argument, the rejection reason.
+        in:
+          - name: value
+            type: Rejector
+        out: []
+    out:
+      - name: next
+        type: ./Promise@0.0.9
+
+
+  - name: resolve
+    doc: Returns a Promise object that is resolved with the given value.
+    templates:
+      - name: Resolver
+        type: class
+    in:
+      - name: value
+        type: Resolver
+    out:
+      - name: promise
+        type: ./Promise@0.0.9
+        templates:
+          - name: Resolver
+            type: Resolver
+
+  - name: reject
+    doc: Returns a Promise object that is rejected with the given reason.
+    templates:
+      - name: Rejector
+        type: class
+    in:
+      - name: reason
+        type: Rejector
+    out:
+      - name: promise
+        type: ./Promise@0.0.9
+        templates:
+          - name: Rejector
+            type: Rejector
+
+
+  - name: all
+    doc:
+      Returns a single Promise that resolves when all of the promises in the
+      iterable argument have resolved or when the iterable argument contains no promises.
+      It rejects with the reason of the first promise that rejects.
+    in:
+      - name: iter
+        type: Iterator
+    out:
+      - name: promise
+        type: ./Promise@0.0.9

@@ -1,0 +1,90 @@
+{
+  "name": "Geolocation",
+  "tags": [
+    "Scientific",
+    "Location"
+  ],
+  "doc": "A _position_ on earth, defined by latitude and longitude. See [Wiki/Geographic Coordinate System](https://en.wikipedia.org/wiki/Geographic_coordinate_system).\n\n![Lat Long](https://upload.wikimedia.org/wikipedia/commons/6/62/Latitude_and_Longitude_of_the_Earth.svg)\n\n[Djexplo / Wikimedia Commons]",
+  "symbols": [
+    {
+      "name": "operator::new",
+      "params": [
+        {
+          "name": "Latitude",
+          "type": "float",
+          "meta": {
+            "default": 0
+          }
+        },
+        {
+          "name": "Longitude",
+          "type": "float",
+          "meta": {
+            "default": 0
+          }
+        }
+      ],
+      "returns": [
+        {
+          "name": "loc",
+          "type": "./Geolocation"
+        }
+      ]
+    },
+    {
+      "name": ".Latitude",
+      "doc": "Position Latitude.",
+      "type": "float"
+    },
+    {
+      "name": ".Longitude",
+      "doc": "Position Longitude.",
+      "type": "float"
+    },
+    {
+      "name": ".DistanceTo",
+      "doc": "Distance between two points along the earth surface in *km*.",
+      "params": [
+        {
+          "name": "other",
+          "type": "./Geolocation"
+        }
+      ],
+      "returns": [
+        {
+          "name": "dist",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "Saint Petersburg",
+      "desc": "[Saint Petersburg](https://de.wikipedia.org/wiki/Saint_Petersburg)",
+      "value": {
+        "Latitude": 59.93863,
+        "Longitude": 30.31413
+      }
+    },
+    {
+      "name": "New York City",
+      "desc": "[New York City](https://de.wikipedia.org/wiki/New_York_City)",
+      "value": {
+        "Latitude": 40.73061,
+        "Longitude": -73.935242
+      }
+    }
+  ],
+  "meta": {
+    "impl": [
+      "CoffeeScript",
+      "JavaScript",
+      "Go"
+    ],
+    "input": [
+      "CoffeeScript",
+      "JavaScript"
+    ]
+  }
+}

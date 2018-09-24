@@ -1,21 +1,19 @@
-name: fmt
-desc: Formatted I/O
+name: Formatted I/O
 tags: [ Go, golang ]
-doc: Hello World :)
-time: 2018-04-23T09:37:28.000Z
-stability: stable
-version: 1.0.0
+version: 0.0.9
 symbols:
   - name: Errorf
     doc: Errorf formats according to a format specifier and returns the string as a value that satisfies error.
-    params:
+    templates:
+      - name: subs
+        type: "*..."
+    in:
       - name: format
         doc: Use format specifiers that will be replaced by the substitutions.
         type: string
       - name: subs
-        meta:
-          abstract: true
-    returns:
+        type: "{subs}..."
+    out:
       - name: err
         type: error
         doc: Error, if any.
@@ -24,7 +22,7 @@ symbols:
         custom: ValidatePrintf
     # examples:
     #   doc: This parameters will print `Hello World, I <3 you!`.
-    #   params:
+    #   in:
     #     - Hello %s, I <%d you!
     #     - World
     #     - 3
@@ -32,14 +30,16 @@ symbols:
     #     - nil
   - name: Printf
     doc: Printf formats according to a format specifier and writes to standard output. It returns the number of bytes written and any write error encountered.
-    params:
+    templates:
+      - name: subs
+        type: "*..."
+    in:
       - name: format
         doc: Use format specifiers that will be replaced by the substitutions.
         type: string
       - name: subs
-        meta:
-          abstract: true
-    returns:
+        type: "{subs}..."
+    out:
       - name: n
         type: int
         doc: Number of bytes written.
@@ -47,29 +47,32 @@ symbols:
         type: error
         doc: Error, if any.
     meta:
-      variadic: true
       constraints:
         custom: ValidatePrintf
     # examples:
     #   doc: This parameters will print `Hello World, I <3 you!`.
-    #   params:
+    #   in:
     #     - Hello %s, I <%d you!
     #     - World
     #     - 3
     #   return:
     #     - 22
     #     - nil
+
   - name: State
+    type: ""
 
   - name: Formatter
-    doc: Formatter is the interface implemented by values with a custom formatter. The implementation of Format may call Sprint(f) or Fprint(f) etc. to generate its output.
+    doc:
+      Formatter is the interface implemented by values with a custom formatter.
+      The implementation of Format may call Sprint(f) or Fprint(f) etc. to generate its output.
     symbols:
-      - name: Format
-        params:
+      - name: .Format
+        in:
           - name: state
-            type: .State
+            type: "#State"
           - name: c
-            type: char
-        returns: []
+            type: rune
+        out: []
     meta:
       abstract: true

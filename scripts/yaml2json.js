@@ -1,79 +1,95 @@
-var all, all2yaml, fs, options, searchPath, translatePath, yaml2json;
+
+/*
+all2yaml = (sym) =>
+  Object.keys(all)
+    .map (key) =>
+      sym = all[key]
+      "#{key}:\n"+
+      "  desc: #{sym.desc}\n"+
+      "  version: #{sym.version}\n"+
+      "  stability: #{sym.stability}\n"+
+      "  time: #{sym.time.toJSON()}\n"+
+      "  tags: [#{sym.tags.join(", ")}]\n"+
+      "  symbols: [#{if sym.symbols then sym.symbols.join(", ") else ""}]"
+    .join "\n"
+*/
+var copy, fs, glob, options, path, previews, semver, translateLib, yaml2json;
 
 yaml2json = require("js-yaml");
 
 fs = require("fs");
 
+semver = require("semver");
+
+glob = require("glob");
+
+path = require("path");
+
+copy = function(from, to) {
+  return fs.createReadStream(from).pipe(fs.createWriteStream(to));
+};
+
 options = {
   encoding: "utf8"
 };
 
-all = {};
+previews = {};
 
-searchPath = function(path) {
-  var file, files, i, id, json, len, name, opject, results, stat, yaml;
-  files = fs.readdirSync(path);
-  results = [];
-  for (i = 0, len = files.length; i < len; i++) {
-    file = files[i];
-    name = path + "/" + file;
-    stat = fs.statSync(name);
-    if (stat.isDirectory()) {
-      results.push(searchPath(name));
-    } else if (stat.isFile()) {
-      if (file.endsWith(".yaml")) {
-        id = name.slice(name.indexOf("/") + 1, -5);
-        console.log(name + " > " + name.slice(0, -5) + ".json");
-        yaml = fs.readFileSync(name, options);
-        opject = yaml2json.safeLoad(yaml, {
-          filename: file
-        });
-        if (!opject.name) {
-          console.warn("file did not export a .name field!");
-          continue;
-        }
-        all[id] = {
-          desc: opject.desc,
-          tags: opject.tags,
-          time: opject.time,
-          version: opject.version,
-          stability: opject.stability
-        };
-        if (opject.symbols) {
-          all[id].symbols = opject.symbols.map((sym) => {
+translateLib = (lib) => {
+  var basename, file, i, json, latest, len, pack, packName, preview, ref, version, yaml;
+  previews = {};
+  ref = glob.sync(lib + "/**/*@*.yaml");
+  for (i = 0, len = ref.length; i < len; i++) {
+    file = ref[i];
+    basename = path.basename(file, ".yaml");
+    console.log(`[${lib}] ${file} > .json`);
+    yaml = fs.readFileSync(file, options);
+    pack = yaml2json.safeLoad(yaml, {
+      filename: file
+    });
+    [packName, version] = basename.split("@");
+    if (packName in previews) {
+      preview = previews[packName];
+      preview.versions.push(version);
+      if (!preview.versions.find((v) => {
+        return semver.gt(v, version);
+      })) {
+        preview.name = pack.name;
+        preview.tags = pack.tags;
+        if (pack.symbols) {
+          preview.symbols = pack.symbols.map((sym) => {
             return sym.name;
           }).filter((name) => {
             return name && !name.startsWith("operator::");
           });
         }
-        json = JSON.stringify(opject, null, 2);
-        results.push(fs.writeFileSync(name.substring(0, name.length - 4) + "json", json));
-      } else {
-        results.push(void 0);
       }
     } else {
-      results.push(void 0);
+      preview = previews[packName] = {
+        versions: [version],
+        name: pack.name,
+        tags: pack.tags
+      };
+      if (pack.symbols) {
+        preview.symbols = pack.symbols.map((sym) => {
+          return sym.name;
+        }).filter((name) => {
+          return name && !name.startsWith("operator::");
+        });
+      }
     }
+    json = JSON.stringify(pack, null, 2);
+    fs.writeFileSync(path.dirname(file) + "/" + basename + ".json", json);
+    preview.versions.sort(semver.lt);
+    latest = path.dirname(file) + "/" + packName + "@" + preview.versions[0] + ".json";
+    copy(latest, path.dirname(file) + "/" + packName + ".json");
   }
-  return results;
+  console.log(`[${lib}] (all previews) > ${lib}.json`);
+  return fs.writeFileSync(lib + ".json", JSON.stringify(previews, null, 2));
 };
 
-all2yaml = (sym) => {
-  return Object.keys(all).map((key) => {
-    sym = all[key];
-    return `${key}:\n` + `  desc: ${sym.desc}\n` + `  version: ${sym.version}\n` + `  stability: ${sym.stability}\n` + `  time: ${sym.time.toJSON()}\n` + `  tags: [${sym.tags.join(", ")}]\n` + `  symbols: [${(sym.symbols ? sym.symbols.join(", ") : "")}]`;
-  }).join("\n");
-};
+// console.log "(all) > #{ path }.yaml"
+// fs.writeFileSync path+".yaml", all2yaml()
+translateLib("go");
 
-translatePath = (path) => {
-  all = {};
-  searchPath(path);
-  console.log(`(all) > ${path}.json`);
-  fs.writeFileSync(path + ".json", JSON.stringify(all, null, 2));
-  console.log(`(all) > ${path}.yaml`);
-  return fs.writeFileSync(path + ".yaml", all2yaml());
-};
-
-translatePath("go");
-
-translatePath("std");
+translateLib("js");

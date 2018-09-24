@@ -1,0 +1,11 @@
+{
+  "name": "(any)",
+  "desc": "Any Type, Placeholder",
+  "tags": [
+    "Other"
+  ],
+  "doc": "A Placeholder for any type.",
+  "time": "2018-04-25T09:37:28.000Z",
+  "version": "1.0.0",
+  "stability": "stable"
+}

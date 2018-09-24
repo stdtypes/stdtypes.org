@@ -33,12 +33,34 @@
   <nav>
     <h1>Standart Types</h1>
     <div class="burger"></div>
-    <input type="text" name="search" value="" placeholder="Search ..">
+    <input type="text" id="search" name="search" value="" placeholder="Search ..">
     <div class="index"></div>
+    <ul class="packager"></ul>
     <ul class="nav"><!--
-    --><li class="active"><a href="/"><span>std::</span></a></li><!--
-    --><li><a href="/go.html"><img src="img/lang-Go.svg"></a></li><!--
-    --><li><a href="/js.html"><img src="img/lang-JavaScript.svg"></a></li><!--
+    --><li>
+        <aside>
+          <img src="img/lang-Go.svg">
+          <a href="https://golang.org/">golang.org says:</a><br>
+          Go is an open source programming language that makes it easy to build simple,
+          reliable, and efficient software.
+        </aside>
+        <a class="link" href="?go">Go (Golang)</a></li><!--
+    --><li>
+        <aside>
+          <img src="img/lang-JavaScript.svg">
+          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">MDN says:</a><br>
+          JavaScript (JS) is a lightweight interpreted or JIT-compiled programming language
+          with first-class functions. While it is most well-known as the scripting language
+          for Web pages, many non-browser environments also use it, such as Node.js,
+          Apache CouchDB and Adobe Acrobat.<br>
+          JavaScript is a prototype-based, multi-paradigm, dynamic language,
+          supporting object-oriented, imperative, and declarative (e.g. functional
+          programming) styles.<br>
+          Read more about <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/About_JavaScript">JavaScript</a>.
+        </aside>
+
+        <a class="link" href="?js">JavaScript</a>
+      </li><!--
   --></ul>
   </nav>
   <section class="container">
@@ -50,8 +72,9 @@
   </footer>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="js/showdown.min.js"></script>
-  <script src="js/main.js"></script>
-  <script> loadEnv("std") </script>
+  <script src="scripts/showdown.min.js"></script>
+  <script src="api/stdtypes.js"></script>
+  <script src="scripts/main.js"></script>
+  <!-- <script> loadEnv("std") </script> -->
 </body>
 </html>

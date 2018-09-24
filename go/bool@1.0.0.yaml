@@ -1,9 +1,9 @@
-name: bool
-desc: Boolean
+name: Boolean
 tags: [ Primitive, True, False ]
+version: 1.0.0
 doc:
   The Boolean data type is a data type having two values, usually denoted true and false.
   [Wiki/Boolean](https://en.wikipedia.org/wiki/Boolean_data_type).
-time: 2018-04-25T09:37:28.000Z
-version: 1.0.0
-stability: stable
+meta:
+  color: "#b8ae28"
+  name: bool

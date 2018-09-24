@@ -1,0 +1,10 @@
+name: Float
+tags: [ Primitive, Buildin ]
+version: 1.0.0
+doc:
+  A floating-point arithmetic is arithmetic using formulaic representation of
+  real numbers as an approximation so as to support a trade-off between range
+  and precision. See
+  [Wiki/Floating-Point Arithmetic](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
+meta:
+  color: "#e2945f"
