@@ -199,6 +199,19 @@ std.match = (type, other) ->
   return null
 
 
+std.template = (type, templates={}, numv=0) ->
+
+  if type.endsWith "..."
+    match = type.match /^\{(\w+)\}\.\.\.$/
+    if match
+      template = match[1]
+      if template of templates
+        return templates[template][numv] || "*"
+    return "*"
+  else
+    return type.replace /\{(\w+)\}/g, (_, t) => templates[t] || "*"
+
+
 ####################
 
 
@@ -266,26 +279,12 @@ class std.Language
 
     @cache = {}
 
-  resolve: (symbol, templates={}, numv=0) ->
+  resolve: (symbol, templates, numv) ->
 
     if symbol.type
-      type = symbol.type
-      if type.endsWith "..."
+      return @fetch std.template symbol.type, templates, numv
 
-        type = type[..-4]
-        match = type.match /^\{(\w+)\}\.\.\.$/
-        if match
-          template = match[1]
-          if template of templates
-            type = templates[template][numv] || "*"
-          else
-            type = "*"
-          return @fetch type
-
-      type = type.replace /\{(\w+)\}/g, (_, t) => templates[t] || "*"
-      return @fetch type
-
-    else return symbol
+    return symbol
 
 ####################
 
@@ -400,6 +399,7 @@ class std.Type
   getMemberName: () -> @name[1..]
   isOperator: () -> @name.startsWith "operator::"
   isVariadic: () -> @type?.endsWith "..."
+  variadicType: () -> @type[..-4]
 
 
 class std.Symbol extends std.Type
@@ -552,22 +552,21 @@ class GolangInternals extends std.Library
         name: ".loop"
         templates: [
           name: "mirrors"
-          type: "*"
-          variadic: true
+          type: "*..."
         ]
         symbols: [
           name: "operator::()"
           in: []
           out: [
             name: "mirrors"
-            type: "{mirrors}"
+            type: "{mirrors}..."
             meta:
               name: ""
           ]
           params: []
           returns: [
             name: "mirrors"
-            type: "{mirrors}"
+            type: "{mirrors}..."
             meta:
               name: ""
           ]
@@ -580,7 +579,7 @@ class GolangInternals extends std.Library
         name: ".ite"
         templates: [
           name: "mirrors"
-          type: "*"
+          type: "*..."
           variadic: true
         ]
         symbols: [
@@ -591,14 +590,14 @@ class GolangInternals extends std.Library
           ]
           out: [
             name: "mirrors"
-            type: "{mirrors}"
+            type: "{mirrors}..."
             meta:
               name: ""
           ]
           params: []
           returns: [
             name: "mirrors"
-            type: "{mirrors}"
+            type: "{mirrors}..."
             meta:
               name: ""
           ]

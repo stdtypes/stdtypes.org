@@ -209,6 +209,24 @@ std.match = function(type, other) {
   return null;
 };
 
+std.template = function(type, templates = {}, numv = 0) {
+  var match, template;
+  if (type.endsWith("...")) {
+    match = type.match(/^\{(\w+)\}\.\.\.$/);
+    if (match) {
+      template = match[1];
+      if (template in templates) {
+        return templates[template][numv] || "*";
+      }
+    }
+    return "*";
+  } else {
+    return type.replace(/\{(\w+)\}/g, (_, t) => {
+      return templates[t] || "*";
+    });
+  }
+};
+
 //###################
 std.Language = class Language {
   constructor(name1, link, logo) {
@@ -283,30 +301,11 @@ std.Language = class Language {
     return this.cache = {};
   }
 
-  resolve(symbol, templates = {}, numv = 0) {
-    var match, template, type;
+  resolve(symbol, templates, numv) {
     if (symbol.type) {
-      type = symbol.type;
-      if (type.endsWith("...")) {
-        type = type.slice(0, -3);
-        match = type.match(/^\{(\w+)\}\.\.\.$/);
-        if (match) {
-          template = match[1];
-          if (template in templates) {
-            type = templates[template][numv] || "*";
-          } else {
-            type = "*";
-          }
-          return this.fetch(type);
-        }
-      }
-      type = type.replace(/\{(\w+)\}/g, (_, t) => {
-        return templates[t] || "*";
-      });
-      return this.fetch(type);
-    } else {
-      return symbol;
+      return this.fetch(std.template(symbol.type, templates, numv));
     }
+    return symbol;
   }
 
 };
@@ -435,6 +434,10 @@ std.Type = class Type {
   isVariadic() {
     var ref1;
     return (ref1 = this.type) != null ? ref1.endsWith("...") : void 0;
+  }
+
+  variadicType() {
+    return this.type.slice(0, -3);
   }
 
 };
@@ -630,8 +633,7 @@ GolangInternals = class GolangInternals extends std.Library {
         templates: [
           {
             name: "mirrors",
-            type: "*",
-            variadic: true
+            type: "*..."
           }
         ],
         symbols: [
@@ -641,7 +643,7 @@ GolangInternals = class GolangInternals extends std.Library {
             out: [
               {
                 name: "mirrors",
-                type: "{mirrors}",
+                type: "{mirrors}...",
                 meta: {
                   name: ""
                 }
@@ -651,7 +653,7 @@ GolangInternals = class GolangInternals extends std.Library {
             returns: [
               {
                 name: "mirrors",
-                type: "{mirrors}",
+                type: "{mirrors}...",
                 meta: {
                   name: ""
                 }
@@ -669,7 +671,7 @@ GolangInternals = class GolangInternals extends std.Library {
         templates: [
           {
             name: "mirrors",
-            type: "*",
+            type: "*...",
             variadic: true
           }
         ],
@@ -685,7 +687,7 @@ GolangInternals = class GolangInternals extends std.Library {
             out: [
               {
                 name: "mirrors",
-                type: "{mirrors}",
+                type: "{mirrors}...",
                 meta: {
                   name: ""
                 }
@@ -695,7 +697,7 @@ GolangInternals = class GolangInternals extends std.Library {
             returns: [
               {
                 name: "mirrors",
-                type: "{mirrors}",
+                type: "{mirrors}...",
                 meta: {
                   name: ""
                 }
